@@ -19,7 +19,7 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Custom Application CSS with Flowing Shapes & Shiny Buttons -->
-    <link href="<%= ctx %>/css/style.css" rel="stylesheet">
+    <link href="<%= ctx %>/css/style.css?v=3.2" rel="stylesheet">
 </head>
 <body>
 
@@ -32,9 +32,10 @@
 <!-- Top Navigation Bar -->
 <nav class="navbar navbar-expand-xl navbar-custom">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<%= currentUser != null ? servlet.LoginServlet.getDashboardUrl(currentUser.getRole(), ctx) : ctx + "/index.jsp" %>">
-            <img src="<%= ctx %>/images/bule-hora-logo.png" alt="Bule Hora Logo" class="school-logo-img">
-            <span class="d-none d-sm-inline"><%= I18nUtil.getMessage(currentLocale, "app.name") %></span>
+        <a class="navbar-brand text-truncate" href="<%= currentUser != null ? servlet.LoginServlet.getDashboardUrl(currentUser.getRole(), ctx) : ctx + "/index.jsp" %>">
+            <img src="<%= ctx %>/images/bule-hora-logo.png" alt="Bule Hora Logo" class="school-logo-img flex-shrink-0">
+            <span class="d-none d-xxl-inline"><%= I18nUtil.getMessage(currentLocale, "app.name") %></span>
+            <span class="d-none d-sm-inline d-xxl-none">Bule Hora Elementary</span>
             <span class="d-inline d-sm-none">Bule Hora</span>
         </a>
 
@@ -143,13 +144,14 @@
 
                 <% if (currentUser != null) { %>
                     <div class="dropdown">
-                        <button class="btn btn-sm btn-outline-light dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i>
-                            <span class="user-name-truncated"><%= currentUser.getFullName() %></span>
-                            <span class="badge bg-warning text-dark"><%= currentUser.getRole().getLocalizedLabel(currentLocale) %></span>
+                        <button class="btn btn-sm btn-outline-light dropdown-toggle d-flex align-items-center gap-1 gap-md-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle flex-shrink-0"></i>
+                            <span class="user-name-truncated text-truncate"><%= currentUser.getUsername() %></span>
+                            <span class="badge bg-warning text-dark flex-shrink-0"><%= currentUser.getRole().name() %></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow">
-                            <li><h6 class="dropdown-header text-white-50"><%= currentUser.getEmail() != null ? currentUser.getEmail() : currentUser.getUsername() %></h6></li>
+                            <li><h6 class="dropdown-header text-white fw-bold"><%= currentUser.getFullName() %></h6></li>
+                            <li><div class="px-3 py-1 small text-white-50"><%= currentUser.getEmail() != null ? currentUser.getEmail() : currentUser.getUsername() %> &bull; <span class="badge bg-warning text-dark"><%= currentUser.getRole().getLocalizedLabel(currentLocale) %></span></div></li>
                             <li><hr class="dropdown-divider border-secondary"></li>
                             <li><a class="dropdown-item text-danger" href="<%= ctx %>/logout"><i class="bi bi-box-arrow-right"></i> <%= I18nUtil.getMessage(currentLocale, "auth.logout") %></a></li>
                         </ul>
