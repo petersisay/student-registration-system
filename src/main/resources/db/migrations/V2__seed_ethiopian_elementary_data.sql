@@ -10,13 +10,17 @@ ON DUPLICATE KEY UPDATE name=VALUES(name);
 
 -- 2. Seed Academic Year & Semesters (Ethiopian Academic Calendar)
 INSERT INTO academic_years (id, name, start_date, end_date, is_current)
-VALUES (1, '2026/2027 (2019 E.C.)', '2026-09-15', '2027-07-05', TRUE)
-ON DUPLICATE KEY UPDATE is_current=VALUES(is_current);
+VALUES 
+(1, '2026/2027 (2019 E.C.)', '2026-09-15', '2027-07-05', TRUE),
+(2, '2027/2028 (2020 E.C.)', '2027-09-15', '2028-07-05', FALSE)
+ON DUPLICATE KEY UPDATE name=VALUES(name);
 
 INSERT INTO academic_terms (id, academic_year_id, name, term_number, start_date, end_date, is_current)
 VALUES 
 (1, 1, 'Semester 1 (አንደኛ ሴሚስተር)', 1, '2026-09-15', '2027-01-30', TRUE),
-(2, 1, 'Semester 2 (ሁለተኛ ሴሚስተር)', 2, '2027-02-15', '2027-07-05', FALSE)
+(2, 1, 'Semester 2 (ሁለተኛ ሴሚስተር)', 2, '2027-02-15', '2027-07-05', FALSE),
+(3, 2, 'Semester 1 (አንደኛ ሴሚስተር)', 1, '2027-09-15', '2028-01-30', FALSE),
+(4, 2, 'Semester 2 (ሁለተኛ ሴሚስተር)', 2, '2028-02-15', '2028-07-05', FALSE)
 ON DUPLICATE KEY UPDATE name=VALUES(name);
 
 -- 3. Seed Grades 1 through 8
@@ -31,7 +35,7 @@ INSERT INTO grade_levels (id, grade_number, name_en, name_am) VALUES
 (8, 8, 'Grade 8', 'ክፍል 8')
 ON DUPLICATE KEY UPDATE name_en=VALUES(name_en), name_am=VALUES(name_am);
 
--- 4. Seed Class Sections for 2026/2027
+-- 4. Seed Class Sections for 2026/2027 and 2027/2028
 INSERT INTO class_sections (id, grade_level_id, academic_year_id, section_name, room_number, max_capacity) VALUES
 (1, 1, 1, 'A', 'Room 101', 40),
 (2, 1, 1, 'B', 'Room 102', 40),
@@ -41,7 +45,8 @@ INSERT INTO class_sections (id, grade_level_id, academic_year_id, section_name, 
 (6, 5, 1, 'A', 'Room 201', 45),
 (7, 6, 1, 'A', 'Room 202', 45),
 (8, 7, 1, 'A', 'Room 203', 45),
-(9, 8, 1, 'A', 'Room 204', 45)
+(9, 8, 1, 'A', 'Room 204', 45),
+(10, 2, 2, 'A', 'Room 103', 40)
 ON DUPLICATE KEY UPDATE room_number=VALUES(room_number);
 
 -- 5. Seed Ethiopian National Elementary Curriculum Subjects
