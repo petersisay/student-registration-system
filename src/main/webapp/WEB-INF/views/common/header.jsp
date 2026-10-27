@@ -30,11 +30,12 @@
 </div>
 
 <!-- Top Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-custom">
+<nav class="navbar navbar-expand-xl navbar-custom">
     <div class="container-fluid">
         <a class="navbar-brand" href="<%= currentUser != null ? servlet.LoginServlet.getDashboardUrl(currentUser.getRole(), ctx) : ctx + "/index.jsp" %>">
             <img src="<%= ctx %>/images/bule-hora-logo.png" alt="Bule Hora Logo" class="school-logo-img">
-            <span><%= I18nUtil.getMessage(currentLocale, "app.name") %></span>
+            <span class="d-none d-sm-inline"><%= I18nUtil.getMessage(currentLocale, "app.name") %></span>
+            <span class="d-inline d-sm-none">Bule Hora</span>
         </a>
 
         <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar">
@@ -42,7 +43,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="topNavbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-xl-0 align-items-xl-center">
                 <% if (currentUser != null) { %>
                     <li class="nav-item">
                         <a class="nav-link-custom" href="<%= servlet.LoginServlet.getDashboardUrl(currentUser.getRole(), ctx) %>">
@@ -71,32 +72,53 @@
                         </li>
                     <% } %>
 
-                    <% if (currentUser.getRole() == Role.TEACHER || currentUser.getRole() == Role.ATTENDANCE_OFFICER || currentUser.getRole() == Role.ADMIN) { %>
+                    <% if (currentUser.getRole() == Role.ADMIN || currentUser.getRole() == Role.PRINCIPAL || currentUser.getRole() == Role.TEACHER) { %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link-custom dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-journal-bookmark-fill"></i> <%= I18nUtil.getMessage(currentLocale, "nav.academics") %>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark shadow">
+                                <li>
+                                    <a class="dropdown-item" href="<%= ctx %>/attendance">
+                                        <i class="bi bi-calendar-check me-2 text-info"></i> <%= I18nUtil.getMessage(currentLocale, "nav.attendance") %>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<%= ctx %>/assessments">
+                                        <i class="bi bi-pencil-square me-2 text-warning"></i> <%= I18nUtil.getMessage(currentLocale, "nav.assessments") %>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<%= ctx %>/reports">
+                                        <i class="bi bi-file-earmark-text me-2 text-success"></i> <%= I18nUtil.getMessage(currentLocale, "nav.report_cards") %>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider border-secondary"></li>
+                                <li>
+                                    <a class="dropdown-item" href="<%= ctx %>/timetable">
+                                        <i class="bi bi-clock-history me-2 text-primary"></i> <%= I18nUtil.getMessage(currentLocale, "nav.timetables") %>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <% } else if (currentUser.getRole() == Role.ATTENDANCE_OFFICER) { %>
                         <li class="nav-item">
                             <a class="nav-link-custom" href="<%= ctx %>/attendance">
                                 <i class="bi bi-calendar-check"></i> <%= I18nUtil.getMessage(currentLocale, "nav.attendance") %>
                             </a>
                         </li>
-                    <% } %>
-
-                    <% if (currentUser.getRole() == Role.TEACHER || currentUser.getRole() == Role.ADMIN || currentUser.getRole() == Role.PRINCIPAL) { %>
                         <li class="nav-item">
-                            <a class="nav-link-custom" href="<%= ctx %>/assessments">
-                                <i class="bi bi-pencil-square"></i> <%= I18nUtil.getMessage(currentLocale, "nav.assessments") %>
+                            <a class="nav-link-custom" href="<%= ctx %>/timetable">
+                                <i class="bi bi-clock-history"></i> <%= I18nUtil.getMessage(currentLocale, "nav.timetables") %>
                             </a>
                         </li>
+                    <% } else { %>
                         <li class="nav-item">
-                            <a class="nav-link-custom" href="<%= ctx %>/reports">
-                                <i class="bi bi-file-earmark-text"></i> <%= I18nUtil.getMessage(currentLocale, "nav.report_cards") %>
+                            <a class="nav-link-custom" href="<%= ctx %>/timetable">
+                                <i class="bi bi-clock-history"></i> <%= I18nUtil.getMessage(currentLocale, "nav.timetables") %>
                             </a>
                         </li>
                     <% } %>
-
-                    <li class="nav-item">
-                        <a class="nav-link-custom" href="<%= ctx %>/timetable">
-                            <i class="bi bi-clock-history"></i> <%= I18nUtil.getMessage(currentLocale, "nav.timetables") %>
-                        </a>
-                    </li>
                 <% } else { %>
                     <li class="nav-item">
                         <a class="nav-link-custom" href="<%= ctx %>/index.jsp">
@@ -112,7 +134,7 @@
             </ul>
 
             <!-- Right side: Language selector & Profile/Login -->
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2 gap-md-3 ms-auto ms-xl-2">
                 <!-- Bilingual Toggle -->
                 <div class="lang-selector">
                     <a href="?lang=en" class="lang-btn <%= "en".equals(currentLocale) ? "active" : "" %>">EN</a>
@@ -123,12 +145,12 @@
                     <div class="dropdown">
                         <button class="btn btn-sm btn-outline-light dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle"></i>
-                            <span><%= currentUser.getFullName() %></span>
+                            <span class="user-name-truncated"><%= currentUser.getFullName() %></span>
                             <span class="badge bg-warning text-dark"><%= currentUser.getRole().getLocalizedLabel(currentLocale) %></span>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow">
-                            <li><h6 class="dropdown-header"><%= currentUser.getEmail() != null ? currentUser.getEmail() : currentUser.getUsername() %></h6></li>
-                            <li><hr class="dropdown-divider"></li>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow">
+                            <li><h6 class="dropdown-header text-white-50"><%= currentUser.getEmail() != null ? currentUser.getEmail() : currentUser.getUsername() %></h6></li>
+                            <li><hr class="dropdown-divider border-secondary"></li>
                             <li><a class="dropdown-item text-danger" href="<%= ctx %>/logout"><i class="bi bi-box-arrow-right"></i> <%= I18nUtil.getMessage(currentLocale, "auth.logout") %></a></li>
                         </ul>
                     </div>
