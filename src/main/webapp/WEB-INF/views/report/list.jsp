@@ -5,7 +5,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
     <div>
         <h2 class="fw-bold mb-1" style="color: var(--primary-navy);">
-            <i class="bi bi-file-earmark-medical-fill me-2" style="color: var(--primary-blue);"></i>${i18n.get('nav.reports')}
+            <i class="bi bi-file-earmark-medical-fill me-2" style="color: var(--primary-blue);"></i>${i18n.get('nav.report_cards')}
         </h2>
         <p class="text-muted mb-0">Official Ethiopian Elementary School Report Cards | የተማሪዎች ካርድ (${currentTerm.name})</p>
     </div>
