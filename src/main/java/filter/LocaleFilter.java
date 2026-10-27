@@ -40,6 +40,21 @@ public class LocaleFilter implements Filter {
                 // Default to English
                 session.setAttribute("currentLocale", "en");
             }
+
+            String activeLocale = (String) session.getAttribute("currentLocale");
+            if (activeLocale == null) activeLocale = "en";
+            final String lang = activeLocale;
+            req.setAttribute("currentLocale", lang);
+            req.setAttribute("i18n", new java.util.AbstractMap<String, String>() {
+                @Override
+                public java.util.Set<java.util.Map.Entry<String, String>> entrySet() {
+                    return java.util.Collections.emptySet();
+                }
+                @Override
+                public String get(Object key) {
+                    return util.I18nUtil.getMessage(lang, String.valueOf(key));
+                }
+            });
         }
 
         chain.doFilter(request, response);

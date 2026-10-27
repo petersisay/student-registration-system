@@ -7,7 +7,7 @@
         <h2 class="fw-bold mb-1" style="color: var(--primary-navy);">
             <i class="bi bi-person-badge-fill me-2" style="color: var(--primary-blue);"></i>${i18n.get('nav.teachers')}
         </h2>
-        <p class="text-muted mb-0">${activeYear.name} (${activeYear.academicYearAmharic})</p>
+        <p class="text-muted mb-0">${activeYear.name}</p>
     </div>
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newTeacherModal">
         <i class="bi bi-person-plus-fill me-1"></i> Add Teacher / መምህር መዝግብ
