@@ -22,6 +22,39 @@ public class DBConnection {
     }
 
     private static synchronized void loadConfiguration() {
+        // Support standard cloud provider connection URIs (Render, Railway, Fly.io, Heroku, Aiven)
+        String cloudDatabaseUrl = System.getenv("DATABASE_URL");
+        if (cloudDatabaseUrl == null || cloudDatabaseUrl.trim().isEmpty()) {
+            cloudDatabaseUrl = System.getenv("MYSQL_URL");
+        }
+
+        if (cloudDatabaseUrl != null && !cloudDatabaseUrl.trim().isEmpty()) {
+            String uri = cloudDatabaseUrl.trim();
+            if (uri.startsWith("mysql://")) {
+                try {
+                    java.net.URI parsed = new java.net.URI(uri);
+                    String userInfo = parsed.getUserInfo();
+                    if (userInfo != null && userInfo.contains(":")) {
+                        String[] parts = userInfo.split(":", 2);
+                        dbUser = parts[0];
+                        dbPassword = parts[1];
+                    } else if (userInfo != null) {
+                        dbUser = userInfo;
+                        dbPassword = "";
+                    }
+                    String path = parsed.getPath();
+                    if (path != null && path.startsWith("/")) {
+                        path = path.substring(1);
+                    }
+                    int p = parsed.getPort() > 0 ? parsed.getPort() : 3306;
+                    dbUrl = "jdbc:mysql://" + parsed.getHost() + ":" + p + "/" + path
+                            + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Africa/Addis_Ababa&characterEncoding=UTF-8";
+                    return;
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
         String envUrl = System.getenv("DB_URL");
         String host = System.getenv("DB_HOST");
         String port = System.getenv("DB_PORT");
