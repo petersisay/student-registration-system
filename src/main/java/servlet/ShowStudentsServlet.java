@@ -1,42 +1,23 @@
 package servlet;
 
-import model.Student;
-import util.DBConnection;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import java.io.IOException;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Legacy servlet preserved for backwards-compatibility.
+ * Redirects requests to the modern searchable, paginated Student Directory (/students).
+ */
 @WebServlet("/show_all")
 public class ShowStudentsServlet extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
-
-        List<Student> students = new ArrayList<>();
-
-        try {
-            Connection conn = DBConnection.getConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM students");
-
-            while (rs.next()) {
-                students.add(new Student(
-                        rs.getString("name"),
-                        rs.getString("email"),
-                        rs.getInt("year")
-                ));
-            }
-
-            request.setAttribute("students", students);
-            request.getRequestDispatcher("students.jsp").forward(request, response);
-
-        } catch (Exception e) {
-            throw new ServletException(e);
-        }
+            throws ServletException, IOException {
+        response.sendRedirect(request.getContextPath() + "/students");
     }
 }

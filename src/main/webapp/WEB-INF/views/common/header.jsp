@@ -104,7 +104,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link-custom" href="<%= ctx %>/show_all">
+                        <a class="nav-link-custom" href="<%= ctx %>/students">
                             <i class="bi bi-people"></i> <%= I18nUtil.getMessage(currentLocale, "nav.students") %>
                         </a>
                     </li>
