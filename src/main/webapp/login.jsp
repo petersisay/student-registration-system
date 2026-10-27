@@ -29,45 +29,70 @@
         .login-card {
             max-width: 480px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 14, 35, 0.85);
+            backdrop-filter: blur(16px);
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(23, 50, 77, 0.18);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 242, 254, 0.15);
             padding: 2.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 242, 254, 0.25);
             position: relative;
+            color: #FFFFFF;
+        }
+        .login-card h3 {
+            color: #FFFFFF !important;
+        }
+        .login-card .text-muted {
+            color: #94A3B8 !important;
+        }
+        .login-card .form-control {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+        }
+        .login-card .form-control:focus {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: #00F2FE;
+            color: #FFFFFF;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.35);
+        }
+        .login-card .form-control::placeholder {
+            color: #94A3B8;
         }
         .credentials-pill {
             font-size: 0.8rem;
-            background: #F8FAFC;
-            border: 1px dashed var(--border-color);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(0, 242, 254, 0.3);
             border-radius: 8px;
             padding: 0.75rem;
             margin-top: 1.5rem;
+            color: #CBD5E1;
+        }
+        .credentials-pill strong {
+            color: #00F2FE;
         }
     </style>
 </head>
 <body>
 
-<!-- Movable and Animated School Landscape Background -->
-<div class="movable-bg-wrapper">
-    <div class="movable-bg-img"></div>
-    <div class="movable-bg-overlay"></div>
+<!-- Futuristic Full-Page Movable Wave Background -->
+<div class="futuristic-wave-wrapper">
+    <div class="futuristic-wave-img"></div>
+    <div class="futuristic-wave-overlay"></div>
 </div>
 
 <div class="login-wrapper">
     <div class="login-card">
         <!-- Bilingual selector -->
         <div class="d-flex justify-content-end mb-3">
-            <div class="lang-selector" style="background: rgba(23, 50, 77, 0.08); border-color: #CBD5E1;">
-                <a href="?lang=en" class="lang-btn <%= "en".equals(currentLocale) ? "active" : "" %>" style="<%= !"en".equals(currentLocale) ? "color: var(--primary-navy);" : "" %>">EN</a>
-                <a href="?lang=am" class="lang-btn <%= "am".equals(currentLocale) ? "active" : "" %>" style="<%= !"am".equals(currentLocale) ? "color: var(--primary-navy);" : "" %>">አማ</a>
+            <div class="lang-selector" style="background: rgba(255, 255, 255, 0.12); border-color: rgba(0, 242, 254, 0.35);">
+                <a href="?lang=en" class="lang-btn <%= "en".equals(currentLocale) ? "active" : "" %>" style="color: #E2E8F0;">EN</a>
+                <a href="?lang=am" class="lang-btn <%= "am".equals(currentLocale) ? "active" : "" %>" style="color: #E2E8F0;">አማ</a>
             </div>
         </div>
 
         <div class="text-center">
             <img src="<%= ctx %>/images/bule-hora-logo.png" alt="Bule Hora Logo" class="school-logo-lg mx-auto d-block">
-            <h3 class="fw-bold text-navy mb-1" style="color: var(--primary-navy);"><%= I18nUtil.getMessage(currentLocale, "app.name") %></h3>
+            <h3 class="fw-bold text-white neon-glow-cyan mb-1"><%= I18nUtil.getMessage(currentLocale, "app.name") %></h3>
             <p class="text-muted small mb-4"><%= I18nUtil.getMessage(currentLocale, "auth.login_subtitle") %></p>
         </div>
 
