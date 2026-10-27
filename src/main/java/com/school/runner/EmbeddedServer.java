@@ -16,9 +16,11 @@ import java.io.File;
 public class EmbeddedServer {
 
     public static void main(String[] args) throws Exception {
-        // Prefer assembled exploded WAR directory if it exists, otherwise source webapp
+        // Prefer source webapp directory if it exists (for live updates), otherwise exploded WAR
+        File sourceWebapp = new File("src/main/webapp");
         File explodedWar = new File("target/StudentRegistrationApp-1.0-SNAPSHOT");
-        String webappDirLocation = explodedWar.exists() ? explodedWar.getAbsolutePath() : new File("src/main/webapp").getAbsolutePath();
+        String webappDirLocation = sourceWebapp.exists() ? sourceWebapp.getAbsolutePath() : 
+                (explodedWar.exists() ? explodedWar.getAbsolutePath() : new File(".").getAbsolutePath());
 
         Tomcat tomcat = new Tomcat();
 
