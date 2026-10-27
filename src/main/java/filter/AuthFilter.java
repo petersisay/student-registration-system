@@ -71,8 +71,23 @@ public class AuthFilter implements Filter {
                 return;
             }
         } else if (path.equals("/attendance") || path.startsWith("/attendance/")) {
-            if (role != Role.ATTENDANCE_OFFICER && role != Role.TEACHER && role != Role.ADMIN) {
-                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Attendance Officer privileges required");
+            if (role != Role.ATTENDANCE_OFFICER && role != Role.TEACHER && role != Role.ADMIN && role != Role.PRINCIPAL) {
+                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Staff attendance privileges required");
+                return;
+            }
+        } else if (path.equals("/assessments") || path.startsWith("/assessments/")) {
+            if (role != Role.TEACHER && role != Role.ADMIN && role != Role.PRINCIPAL) {
+                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Faculty grading privileges required");
+                return;
+            }
+        } else if (path.equals("/reports") || path.startsWith("/reports/")) {
+            if (role != Role.TEACHER && role != Role.ADMIN && role != Role.PRINCIPAL) {
+                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Report card privileges required");
+                return;
+            }
+        } else if (path.equals("/students") || path.startsWith("/students/")) {
+            if (role == Role.STUDENT) {
+                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Student directory is restricted to staff");
                 return;
             }
         } else if (path.equals("/student") || path.startsWith("/student/")) {
