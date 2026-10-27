@@ -56,4 +56,7 @@ public class Subject {
     public String getDisplayName(String locale) {
         return "am".equalsIgnoreCase(locale) ? nameAm : nameEn;
     }
+
+    public String getName() { return nameEn; }
+    public String getNameAmharic() { return nameAm; }
 }

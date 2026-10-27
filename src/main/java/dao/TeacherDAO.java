@@ -226,4 +226,66 @@ public class TeacherDAO {
         t.setStatus(rs.getString("status"));
         return t;
     }
+
+    public List<Teacher> getAllTeachers() {
+        return findAll();
+    }
+
+    public Teacher getTeacherById(int id) {
+        return findById(id);
+    }
+
+    public int saveTeacher(Teacher t) {
+        return create(t);
+    }
+
+    public List<TeacherAssignment> getTeacherAssignments(int teacherId, int academicYearId) {
+        return getAssignments(teacherId, academicYearId);
+    }
+
+    public boolean deleteAssignment(int id) {
+        return removeAssignment(id);
+    }
+
+    public List<TeacherAssignment> getAssignmentsForClass(int classSectionId, int academicYearId) {
+        List<TeacherAssignment> list = new ArrayList<>();
+        String sql = "SELECT tca.*, t.full_name_en AS teacher_name, t.employee_id, cs.section_name, " +
+                     "gl.name_en AS grade_name, s.name_en AS subject_name, ay.name AS year_name " +
+                     "FROM teacher_class_assignments tca " +
+                     "JOIN teachers t ON tca.teacher_id = t.id " +
+                     "JOIN class_sections cs ON tca.class_section_id = cs.id " +
+                     "JOIN grade_levels gl ON cs.grade_level_id = gl.id " +
+                     "JOIN academic_years ay ON tca.academic_year_id = ay.id " +
+                     "LEFT JOIN subjects s ON tca.subject_id = s.id " +
+                     "WHERE tca.class_section_id = ? AND tca.academic_year_id = ? " +
+                     "ORDER BY s.name_en ASC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, classSectionId);
+            ps.setInt(2, academicYearId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    TeacherAssignment a = new TeacherAssignment();
+                    a.setId(rs.getInt("id"));
+                    a.setTeacherId(rs.getInt("teacher_id"));
+                    a.setClassSectionId(rs.getInt("class_section_id"));
+                    int sId = rs.getInt("subject_id");
+                    if (!rs.wasNull()) a.setSubjectId(sId);
+                    a.setAcademicYearId(rs.getInt("academic_year_id"));
+                    a.setPrimaryHomeroom(rs.getBoolean("is_primary_homeroom"));
+                    a.setAssignedAt(rs.getTimestamp("assigned_at"));
+                    a.setTeacherName(rs.getString("teacher_name"));
+                    a.setTeacherEmployeeId(rs.getString("employee_id"));
+                    a.setSectionName(rs.getString("section_name"));
+                    a.setGradeName(rs.getString("grade_name"));
+                    a.setSubjectName(rs.getString("subject_name"));
+                    a.setAcademicYearName(rs.getString("year_name"));
+                    list.add(a);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

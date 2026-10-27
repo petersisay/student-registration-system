@@ -66,4 +66,7 @@ public class TeacherAssignment {
     public String getFullClassName() {
         return (gradeName != null ? gradeName : "") + " - " + sectionName;
     }
+
+    public boolean isHomeroom() { return isPrimaryHomeroom; }
+    public String getSubjectNameAmharic() { return subjectName; }
 }

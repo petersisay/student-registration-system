@@ -69,4 +69,9 @@ public class Teacher {
         }
         return fullNameEn;
     }
+
+    public String getFullName() { return fullNameEn; }
+    public String getNameAmharic() { return fullNameAm; }
+    public String getTeacherCode() { return employeeId; }
+    public boolean isActive() { return "ACTIVE".equalsIgnoreCase(status); }
 }

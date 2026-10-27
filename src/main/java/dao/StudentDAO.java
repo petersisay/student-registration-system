@@ -352,4 +352,8 @@ public class StudentDAO {
 
         return s;
     }
+
+    public List<Student> getStudentsByClass(int classSectionId, int academicYearId) {
+        return findEnrolledByClass(classSectionId);
+    }
 }

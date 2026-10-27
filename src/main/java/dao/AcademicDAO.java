@@ -292,4 +292,40 @@ public class AcademicDAO {
         }
         return false;
     }
+
+    public AcademicYear getActiveAcademicYear() {
+        return getCurrentAcademicYear();
+    }
+
+    public List<ClassSection> getAllClassSections() {
+        AcademicYear year = getCurrentAcademicYear();
+        int yearId = (year != null) ? year.getId() : 1;
+        return getClassSections(yearId, null);
+    }
+
+    public List<Subject> getAllSubjects() {
+        List<Subject> list = new ArrayList<>();
+        String sql = "SELECT s.*, gl.name_en AS grade_name FROM subjects s " +
+                     "JOIN grade_levels gl ON s.grade_level_id = gl.id " +
+                     "ORDER BY gl.grade_number ASC, s.code ASC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Subject s = new Subject();
+                s.setId(rs.getInt("id"));
+                s.setCode(rs.getString("code"));
+                s.setNameEn(rs.getString("name_en"));
+                s.setNameAm(rs.getString("name_am"));
+                s.setGradeLevelId(rs.getInt("grade_level_id"));
+                s.setPassMark(rs.getBigDecimal("pass_mark"));
+                s.setMaxMark(rs.getBigDecimal("max_mark"));
+                s.setGradeName(rs.getString("grade_name"));
+                list.add(s);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
