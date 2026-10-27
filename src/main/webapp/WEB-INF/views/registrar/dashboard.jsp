@@ -27,7 +27,7 @@
             <a href="<%= ctx %>/students?action=new" class="btn btn-shine btn-shine-primary">
                 <i class="bi bi-person-plus-fill"></i> <%= I18nUtil.getMessage(currentLocale, "nav.student_register") %>
             </a>
-            <a href="<%= ctx %>/students?action=progression" class="btn btn-shine btn-shine-gold">
+            <a href="<%= ctx %>/students/progress" class="btn btn-shine btn-shine-gold">
                 <i class="bi bi-arrow-up-right-circle-fill"></i> <%= I18nUtil.getMessage(currentLocale, "nav.grade_progression") %>
             </a>
         </div>
