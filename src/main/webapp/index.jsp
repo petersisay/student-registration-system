@@ -29,7 +29,10 @@
         }
     }
 
-    String currentLocale = (String) session.getAttribute("userLocale");
+    String currentLocale = (String) session.getAttribute("currentLocale");
+    if (request.getParameter("lang") != null) {
+        currentLocale = request.getParameter("lang");
+    }
     if (currentLocale == null || currentLocale.isEmpty()) {
         currentLocale = "en";
     }
