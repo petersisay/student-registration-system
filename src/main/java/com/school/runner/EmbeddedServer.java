@@ -16,7 +16,10 @@ import java.io.File;
 public class EmbeddedServer {
 
     public static void main(String[] args) throws Exception {
-        String webappDirLocation = "src/main/webapp";
+        // Prefer assembled exploded WAR directory if it exists, otherwise source webapp
+        File explodedWar = new File("target/StudentRegistrationApp-1.0-SNAPSHOT");
+        String webappDirLocation = explodedWar.exists() ? explodedWar.getAbsolutePath() : new File("src/main/webapp").getAbsolutePath();
+
         Tomcat tomcat = new Tomcat();
 
         String webPort = System.getenv("PORT");
@@ -31,10 +34,11 @@ public class EmbeddedServer {
             contextPath = "";
         }
 
-        StandardContext ctx = (StandardContext) tomcat.addWebapp(contextPath, new File(webappDirLocation).getAbsolutePath());
+        StandardContext ctx = (StandardContext) tomcat.addWebapp(contextPath, webappDirLocation);
         ctx.setReloadable(true);
+        // Delegate class loading to parent class loader so all compiled classes & libraries are visible
+        ctx.setParentClassLoader(EmbeddedServer.class.getClassLoader());
 
-        // Map target/classes to WEB-INF/classes so servlets and models are discovered
         File additionWebInfClasses = new File("target/classes");
         if (additionWebInfClasses.exists()) {
             WebResourceRoot resources = new StandardRoot(ctx);
