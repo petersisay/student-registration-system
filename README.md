@@ -1,6 +1,6 @@
 # 🇪🇹 Modern Ethiopian Elementary School Management System (Grades 1–8)
-### Addis Tesfa Elementary School Information Management System
-**አዲስ ተስፋ የመጀመሪያ ደረጃ ትምህርት ቤት መረጃ አስተዳደር ሥርዓት (ከ1ኛ - 8ኛ ክፍል)**
+### Bule Hora Elementary School Information Management System
+**ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት መረጃ አስተዳደር ሥርዓት (ከ1ኛ - 8ኛ ክፍል)**
 
 [![Java](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://openjdk.org/)
 [![Jakarta EE](https://img.shields.io/badge/Jakarta%20EE-10.0-orange.svg)](https://jakarta.ee/)
@@ -24,7 +24,7 @@ Traditional paper-based school operations in elementary schools suffer from:
 4. **Disorganized Continuous Assessment**: Lack of standardized aggregation for quizzes, midterms, projects, and final examinations based on national curriculum standards.
 5. **Slow Manual Report Card Generation**: Calculating ranks, term averages, conduct scores, and attendance roll for hundreds of students takes weeks of manual arithmetic.
 
-### The Solution: Addis Tesfa Elementary System
+### The Solution: Bule Hora Elementary System
 This modernized platform provides a unified, secure, bilingual digital hub with:
 - **Historical Academic Record Preservation**: Multi-year student enrollment tables ensure that promoting a student creates a new active enrollment while archiving previous grade records without deletion.
 - **Explicit Role-Based Access Control (RBAC)**: Teachers can *only* take attendance and enter marks for classes and subjects explicitly assigned to them by the administrator.

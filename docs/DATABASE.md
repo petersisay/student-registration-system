@@ -81,4 +81,4 @@ The system features an automated SQL migration runner (`util.DatabaseMigration`)
 - Auto-creates the database `student_db` if missing.
 - Applies versioned scripts in sequential order:
   1. `V1__init_schema.sql`: Complete DDL for 20 relational tables with foreign keys and indexes.
-  2. `V2__seed_ethiopian_elementary_data.sql`: Addis Tesfa reference data, Grades 1-8 levels, class sections, Ethiopian elementary curriculum subjects, grading policies, and initial notices.
+  2. `V2__seed_ethiopian_elementary_data.sql`: Bule Hora reference data, Grades 1-8 levels, class sections, Ethiopian elementary curriculum subjects, grading policies, and initial notices.
