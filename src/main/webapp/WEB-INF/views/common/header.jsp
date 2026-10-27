@@ -33,7 +33,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
         <a class="navbar-brand" href="<%= currentUser != null ? servlet.LoginServlet.getDashboardUrl(currentUser.getRole(), ctx) : ctx + "/index.jsp" %>">
-            <div class="school-badge">AT</div>
+            <img src="<%= ctx %>/images/bule-hora-logo.png" alt="Bule Hora Logo" class="school-logo-img">
             <span><%= I18nUtil.getMessage(currentLocale, "app.name") %></span>
         </a>
 
