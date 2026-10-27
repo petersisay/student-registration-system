@@ -43,37 +43,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= isAmharic ? "አዲስ ተስፋ የመጀመሪያ ደረጃ ትምህርት ቤት (1ኛ - 8ኛ ክፍል)" : "Addis Tesfa Elementary School (Grades 1–8)" %></title>
+    <title><%= isAmharic ? "ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት (1ኛ - 8ኛ ክፍል)" : "Bule Hora Elementary School (Grades 1–8)" %></title>
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Custom Design System -->
     <link href="<%= request.getContextPath() %>/css/style.css" rel="stylesheet">
     <style>
-        .hero-banner {
-            background: linear-gradient(135deg, var(--primary-navy) 0%, #1a3f63 50%, var(--primary-blue) 100%);
-            color: #FFFFFF;
-            padding: 5rem 1rem 4rem;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 4px solid var(--warm-gold);
-        }
-        .hero-emblem {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, var(--warm-gold), #E69D1E);
-            color: var(--primary-navy);
-            border-radius: 24px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 25px rgba(244, 185, 66, 0.4);
-        }
         .feature-box {
-            background: #FFFFFF;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
             border-radius: 16px;
             padding: 2rem 1.5rem;
             border: 1px solid var(--border-color);
@@ -110,18 +89,18 @@
 </head>
 <body>
 
-<!-- Animated Flowing Background -->
-<div class="flowing-bg">
-    <div class="shape-blob blob-1"></div>
-    <div class="shape-blob blob-2"></div>
+<!-- Movable and Animated School Landscape Background -->
+<div class="movable-bg-wrapper">
+    <div class="movable-bg-img"></div>
+    <div class="movable-bg-overlay"></div>
 </div>
 
 <!-- Header / Navigation -->
 <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="<%= request.getContextPath() %>/index.jsp">
-            <div class="school-badge">AT</div>
-            <span><%= isAmharic ? "አዲስ ተስፋ የመጀመሪያ ደረጃ ትምህርት ቤት" : "Addis Tesfa Elementary School" %></span>
+            <img src="<%= request.getContextPath() %>/images/bule-hora-logo.png" alt="Bule Hora Logo" class="school-logo-img">
+            <span><%= isAmharic ? "ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት" : "Bule Hora Elementary School" %></span>
         </a>
 
         <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#publicNav">
@@ -163,14 +142,16 @@
     </div>
 </nav>
 
-<!-- Hero Banner -->
-<section class="hero-banner text-center">
-    <div class="container position-relative" style="z-index: 2;">
-        <div class="hero-emblem">AT</div>
-        <h1 class="display-5 fw-bold mb-2">
-            <%= isAmharic ? "አዲስ ተስፋ የመጀመሪያ ደረጃ ትምህርት ቤት" : "Addis Tesfa Elementary School" %>
+<!-- Hero Banner with Movable School Background & Bule Hora Logo -->
+<section class="hero-banner-bule-hora text-center">
+    <div class="hero-bg-anim"></div>
+    <div class="hero-overlay-gradient"></div>
+    <div class="container position-relative" style="z-index: 3;">
+        <img src="<%= request.getContextPath() %>/images/bule-hora-logo.png" alt="Bule Hora School Logo" class="school-logo-lg">
+        <h1 class="display-5 fw-bold mb-2 text-white">
+            <%= isAmharic ? "ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት" : "Bule Hora Elementary School" %>
         </h1>
-        <p class="lead mb-4 mx-auto" style="max-width: 720px; color: #E2E8F0;">
+        <p class="lead mb-4 mx-auto" style="max-width: 720px; color: #F1F5F9;">
             <%= isAmharic 
                 ? "የ1ኛ እስከ 8ኛ ክፍል የተሟላ የትምህርት ቤት መረጃ አስተዳደር ሥርዓት - ተማሪዎች፣ ምዘና፣ የተገኝነት ክትትልና የውጤት ካርድ።" 
                 : "Modern, bilingual elementary school management platform for Grades 1–8. Streamlining admissions, daily attendance, continuous assessments, and official report cards." 
@@ -185,7 +166,7 @@
             </a>
         </div>
         <div class="mt-4 pt-2 text-warning small font-monospace">
-            <i class="bi bi-calendar3 me-1"></i><%= isAmharic ? "የትምህርት ዘመን፡ 2019 ዓ.ም (2026/2027)" : "Academic Year: 2026/2027 (2019 E.C.)" %> &bull; Addis Ababa, Ethiopia
+            <i class="bi bi-geo-alt-fill me-1"></i>Bule Hora, West Guji Zone, Oromia, Ethiopia &bull; <%= isAmharic ? "የትምህርት ዘመን፡ 2019 ዓ.ም (2026/2027)" : "Academic Year: 2026/2027 (2019 E.C.)" %>
         </div>
     </div>
 </section>
@@ -309,9 +290,9 @@
 <!-- Footer -->
 <footer class="app-footer text-center">
     <div class="container">
-        <div class="school-badge mx-auto mb-2" style="width: 38px; height: 38px; font-size: 1.1rem;">AT</div>
-        <p class="mb-1 fw-bold text-navy" style="color: var(--primary-navy);">Addis Tesfa Elementary School (አዲስ ተስፋ የመጀመሪያ ደረጃ ትምህርት ቤት)</p>
-        <p class="text-muted small mb-0">Arada Sub-City, Addis Ababa, Ethiopia &bull; 2026 Ethiopian Elementary School Management System</p>
+        <img src="<%= request.getContextPath() %>/images/bule-hora-logo.png" alt="Bule Hora Logo" class="school-logo-img mx-auto mb-2" style="height: 38px;">
+        <p class="mb-1 fw-bold text-navy" style="color: var(--primary-navy);">Bule Hora Elementary School (ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት)</p>
+        <p class="text-muted small mb-0">Bule Hora, West Guji Zone, Oromia, Ethiopia &bull; 2026 Elementary School Management System</p>
     </div>
 </footer>
 
