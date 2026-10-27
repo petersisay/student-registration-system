@@ -1,46 +1,34 @@
 # Free Cloud Web Deployment Guide
 
 ## 1. Overview
-The **Ethiopian Elementary School Management System** is packaged as both a standalone web application runner (`com.school.runner.EmbeddedServer`) and a standard `WAR` file (`target/StudentRegistrationApp.war`). This dual capability allows deployment on conventional Apache Tomcat servers as well as modern containerized platforms.
+The **Bule Hora Elementary School Management System** is packaged as both a standalone web application runner (`com.school.runner.EmbeddedServer`) and a standard `WAR` file (`target/StudentRegistrationApp.war`). This dual capability allows instantaneous deployment on conventional Apache Tomcat servers as well as modern containerized free-tier cloud platforms (Render, Railway, Fly.io).
 
 ---
 
-## 2. Recommended Free-Tier Hosting Options
+## 2. 1-Click & Free-Tier Hosting Options
 
-### Option A: Render (Web Service + Managed Cloud MySQL)
-- **Application**: Render Web Service (Free Tier)
-  - Environment: Docker or Java native.
-  - Build Command: `./mvnw clean package`
-  - Start Command: `java -Dserver.port=$PORT -cp target/classes:target/dependency/* com.school.runner.EmbeddedServer`
-  - Free Limitations: Spins down after 15 minutes of inactivity; spins up automatically upon incoming HTTP request.
-- **Database**:
-  - Free Cloud MySQL: **Aiven for MySQL** (Free Tier with 5GB storage) or **Clever Cloud MySQL** (Free 10MB starter).
-  - Environment variables configured on Render:
-    - `DB_URL`: `jdbc:mysql://<host>:<port>/<dbname>?useSSL=true&characterEncoding=UTF-8`
-    - `DB_USER`: `<username>`
-    - `DB_PASSWORD`: `<password>`
+### Option A: Render (Free Web Service)
+1. Fork or push your code to your GitHub account: `https://github.com/petersisay/student-registration-system`.
+2. Sign in to [Render.com](https://render.com) (free account).
+3. Click **New +** -> **Blueprint** or **Web Service**.
+4. Select this repository. Render automatically reads `render.yaml` and `Dockerfile`.
+5. Under Environment Variables, configure your free MySQL database credentials:
+   - `DB_URL`: `jdbc:mysql://<host>:<port>/<dbname>?useSSL=true&characterEncoding=UTF-8`
+   - `DB_USER`: `<username>`
+   - `DB_PASSWORD`: `<password>`
+6. Click **Deploy**. The system will build and launch at `https://bule-hora-elementary-school.onrender.com`.
 
-### Option B: Railway.app
-- Supports direct GitHub repository integration.
-- Automatically provisions a free MySQL instance and attaches `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD`, `MYSQLDATABASE`.
-- Zero configuration needed: `DBConnection.java` detects standard environment variables automatically.
+### Option B: Railway.app (Free Automatic Cloud Deployment)
+1. Sign in to [Railway.app](https://railway.app).
+2. Click **New Project** -> **Deploy from GitHub repo** -> select `student-registration-system`.
+3. Add a free **MySQL** database from the Railway canvas.
+4. Railway automatically provides `MYSQL_URL` and `DATABASE_URL` which `DBConnection.java` detects out of the box with zero configuration!
 
-### Option C: Fly.io
-- Deploy via Dockerfile:
-```dockerfile
-FROM eclipse-temurin:17-jdk-jammy AS build
-WORKDIR /app
-COPY . .
-RUN ./mvnw clean package -DskipTests
-
-FROM eclipse-temurin:17-jre-jammy
-WORKDIR /app
-COPY --from=build /app/target/StudentRegistrationApp.war /app/app.war
-COPY --from=build /app/target/classes /app/classes
-COPY --from=build /app/target/dependency /app/dependency
-ENV PORT=8080
-EXPOSE 8080
-CMD ["java", "-cp", "/app/classes:/app/dependency/*", "com.school.runner.EmbeddedServer"]
+### Option C: Containerized Deployment (Docker / Fly.io / AWS ECS)
+Build and run the production container locally or on any cloud server:
+```bash
+docker build -t bule-hora-school:latest .
+docker run -p 8080:8080 -e DB_HOST=host.docker.internal -e DB_USER=root bule-hora-school:latest
 ```
 
 ---
