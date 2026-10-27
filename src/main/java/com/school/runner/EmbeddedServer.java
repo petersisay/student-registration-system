@@ -50,7 +50,7 @@ public class EmbeddedServer {
         }
 
         System.out.println("==================================================================");
-        System.out.println("  Ethiopian Elementary School Management System");
+        System.out.println("  Bule Hora Elementary School Management System (Grades 1-8)");
         System.out.println("  Starting server on: http://localhost:" + webPort + contextPath + "/");
         System.out.println("==================================================================");
 
