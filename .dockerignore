@@ -1,0 +1,7 @@
+.git
+.github
+target/
+.system_generated/
+*.log
+*.ps1
+bule-hora-school-management-system.zip
