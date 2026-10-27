@@ -11,6 +11,7 @@ public class AcademicYear {
     private Date startDate;
     private Date endDate;
     private boolean isCurrent;
+    private String academicYearAmharic;
 
     public AcademicYear() {}
 
@@ -36,4 +37,11 @@ public class AcademicYear {
 
     public boolean isCurrent() { return isCurrent; }
     public void setCurrent(boolean current) { isCurrent = current; }
+
+    public String getAcademicYearAmharic() {
+        return academicYearAmharic != null && !academicYearAmharic.isEmpty() ? academicYearAmharic : name;
+    }
+    public void setAcademicYearAmharic(String academicYearAmharic) {
+        this.academicYearAmharic = academicYearAmharic;
+    }
 }

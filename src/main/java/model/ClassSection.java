@@ -13,6 +13,7 @@ public class ClassSection {
 
     // Joined display fields
     private String gradeName;
+    private String gradeNameAmharic;
     private int gradeNumber;
     private String academicYearName;
     private int studentCount;
@@ -45,8 +46,16 @@ public class ClassSection {
     public int getMaxCapacity() { return maxCapacity; }
     public void setMaxCapacity(int maxCapacity) { this.maxCapacity = maxCapacity; }
 
+    public int getCapacity() { return maxCapacity; }
+    public void setCapacity(int capacity) { this.maxCapacity = capacity; }
+
     public String getGradeName() { return gradeName; }
     public void setGradeName(String gradeName) { this.gradeName = gradeName; }
+
+    public String getGradeNameAmharic() {
+        return gradeNameAmharic != null && !gradeNameAmharic.isEmpty() ? gradeNameAmharic : (gradeNumber > 0 ? gradeNumber + "ኛ ክፍል" : (gradeName != null ? gradeName : ""));
+    }
+    public void setGradeNameAmharic(String gradeNameAmharic) { this.gradeNameAmharic = gradeNameAmharic; }
 
     public int getGradeNumber() { return gradeNumber; }
     public void setGradeNumber(int gradeNumber) { this.gradeNumber = gradeNumber; }
