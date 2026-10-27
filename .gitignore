@@ -5,6 +5,7 @@ target/
 .kotlin
 tomcat.*/
 cookies.txt
+*.zip
 
 ### IntelliJ IDEA ###
 .idea/
