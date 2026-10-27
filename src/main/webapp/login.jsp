@@ -29,26 +29,13 @@
         .login-card {
             max-width: 480px;
             width: 100%;
-            background: #FFFFFF;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(23, 50, 77, 0.12);
+            box-shadow: 0 15px 35px rgba(23, 50, 77, 0.18);
             padding: 2.5rem;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             position: relative;
-        }
-        .school-emblem {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, var(--warm-gold), #E69D1E);
-            color: var(--primary-navy);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin: 0 auto 1.25rem;
-            box-shadow: 0 6px 16px rgba(244, 185, 66, 0.35);
         }
         .credentials-pill {
             font-size: 0.8rem;
@@ -62,9 +49,10 @@
 </head>
 <body>
 
-<div class="flowing-bg">
-    <div class="shape-blob blob-1"></div>
-    <div class="shape-blob blob-2"></div>
+<!-- Movable and Animated School Landscape Background -->
+<div class="movable-bg-wrapper">
+    <div class="movable-bg-img"></div>
+    <div class="movable-bg-overlay"></div>
 </div>
 
 <div class="login-wrapper">
@@ -78,7 +66,7 @@
         </div>
 
         <div class="text-center">
-            <div class="school-emblem">AT</div>
+            <img src="<%= ctx %>/images/bule-hora-logo.png" alt="Bule Hora Logo" class="school-logo-lg mx-auto d-block">
             <h3 class="fw-bold text-navy mb-1" style="color: var(--primary-navy);"><%= I18nUtil.getMessage(currentLocale, "app.name") %></h3>
             <p class="text-muted small mb-4"><%= I18nUtil.getMessage(currentLocale, "auth.login_subtitle") %></p>
         </div>
