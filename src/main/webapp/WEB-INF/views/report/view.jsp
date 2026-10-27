@@ -88,15 +88,13 @@
     <!-- Header -->
     <div class="text-center border-bottom pb-4 mb-4">
         <div class="d-flex justify-content-center align-items-center gap-3 mb-2">
-            <div style="width: 50px; height: 50px; border-radius: 50%; background: #17324D; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
-                <i class="bi bi-mortarboard-fill"></i>
-            </div>
+            <img src="${pageContext.request.contextPath}/images/bule-hora-logo.png" alt="Bule Hora Logo" class="school-logo-img" style="height: 54px; width: auto;">
             <div>
-                <h3 class="fw-bold mb-0" style="color: #17324D;">ADDIS TESFA ELEMENTARY SCHOOL</h3>
-                <h5 class="fw-bold mb-0 text-muted" style="font-family: 'Noto Sans Ethiopic', sans-serif;">አዲስ ተስፋ የመጀመሪያ ደረጃ ትምህርት ቤት (1ኛ - 8ኛ ክፍል)</h5>
+                <h3 class="fw-bold mb-0" style="color: #17324D;">BULE HORA ELEMENTARY SCHOOL</h3>
+                <h5 class="fw-bold mb-0 text-muted" style="font-family: 'Noto Sans Ethiopic', sans-serif;">ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት (1ኛ - 8ኛ ክፍል)</h5>
             </div>
         </div>
-        <p class="text-muted small mb-0">Addis Ababa, Ethiopia | Official Student Academic Progress Report | ${activeYear.name}</p>
+        <p class="text-muted small mb-0">Bule Hora, West Guji, Oromia, Ethiopia | Official Student Academic Progress Report | ${activeYear.name}</p>
     </div>
 
     <!-- Student Details -->

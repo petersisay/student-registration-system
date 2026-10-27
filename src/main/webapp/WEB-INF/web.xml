@@ -4,7 +4,7 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
 
-    <display-name>Addis Tesfa Elementary School Management System</display-name>
+    <display-name>Bule Hora Elementary School Management System</display-name>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
