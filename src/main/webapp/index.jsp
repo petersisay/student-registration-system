@@ -51,13 +51,13 @@
     <link href="<%= request.getContextPath() %>/css/style.css" rel="stylesheet">
     <style>
         .feature-box {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
+            background: #FFFFFF;
             border-radius: 16px;
-            padding: 2rem 1.5rem;
+            padding: 2.25rem 1.75rem;
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
             height: 100%;
+            box-shadow: 0 4px 16px rgba(23, 50, 77, 0.05);
         }
         .feature-box:hover {
             transform: translateY(-6px);
@@ -76,23 +76,24 @@
         }
         .grade-badge {
             display: inline-block;
-            background: rgba(37, 99, 235, 0.08);
+            background: #EFF6FF;
             color: var(--primary-blue);
             font-weight: 600;
-            padding: 0.35rem 0.75rem;
+            padding: 0.45rem 0.9rem;
             border-radius: 8px;
-            border: 1px solid rgba(37, 99, 235, 0.2);
-            margin: 0.2rem;
-            font-size: 0.85rem;
+            border: 1px solid #BFDBFE;
+            margin: 0.25rem;
+            font-size: 0.88rem;
+            box-shadow: 0 1px 3px rgba(37, 99, 235, 0.08);
         }
     </style>
 </head>
 <body>
 
-<!-- Movable and Animated School Landscape Background -->
-<div class="movable-bg-wrapper">
-    <div class="movable-bg-img"></div>
-    <div class="movable-bg-overlay"></div>
+<!-- Subtle Ambient Flowing Shapes Background -->
+<div class="flowing-bg">
+    <div class="shape-blob blob-1"></div>
+    <div class="shape-blob blob-2"></div>
 </div>
 
 <!-- Header / Navigation -->
@@ -175,6 +176,9 @@
         </div>
     </div>
 </section>
+
+<!-- Main Portal Content with Clean Opaque Background for Maximum Readability -->
+<main class="portal-main-content">
 
 <!-- Curriculum & Structure (Grades 1-8) -->
 <section class="py-5">
@@ -291,6 +295,7 @@
         </div>
     </div>
 </section>
+</main>
 
 <!-- Footer -->
 <footer class="app-footer text-center">
