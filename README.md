@@ -140,31 +140,41 @@ The database features 20 normalized tables with strict foreign keys:
    ```powershell
    .\mvnw.cmd test
    ```
-   *All 6 unit and integration tests (AuthFilter, DB Migration, I18n, Score Calculation, Progression, and Teacher Authorization) will execute and pass 100%.*
+   *All 7 unit and integration tests (AuthFilter, DB Migration, I18n, Score Calculation, Progression, Teacher Authorization, and PBKDF2 Password Security) execute and pass 100%.*
 
 4. **Launch the Application**:
    ```powershell
    .\mvnw.cmd compile exec:java
    ```
-   *The embedded Tomcat 10.1 server will start immediately on `http://localhost:8080`.*
+   *The embedded Tomcat 10.1 server starts immediately on `http://localhost:8080/`.*
 
-5. **Open Browser**:
-   Navigate to [http://localhost:8080](http://localhost:8080) in your web browser.
+5. **Open Browser & Verified Route Summary**:
+   Navigate to [http://localhost:8080/](http://localhost:8080/) in your web browser.
+
+   | Route | Purpose | Access Control | Language Support |
+   |---|---|---|---|
+   | `/` or `/index.jsp` | Modern Bilingual Portal & Overview | Public | EN / አማርኛ (`?lang=am`) |
+   | `/login` | Staff & Student Authentication Portal | Public | EN / አማርኛ (`?lang=am`) |
+   | `/show_all` | Legacy redirect to modern student directory | Auto 302 Redirect | - |
+   | `/students` | Searchable Student Directory & Profiles | Staff / Auth Required | EN / አማርኛ |
+   | `/admin/dashboard` | Administrator Operations & Metric Cards | ADMIN role | EN / አማርኛ |
+   | `/teacher/dashboard`| Teacher Dashboard & Assigned Classes | TEACHER role | EN / አማርኛ |
+   | `/student/portal` | Child-Friendly Student Hub & Report Card | STUDENT role | EN / አማርኛ |
 
 ---
 
-## 🔑 6. Default User Accounts
+## 🔑 6. Default User Accounts (Development Fixtures)
 
-The database migration automatically provisions the following test accounts with secure salted SHA-256 password hashing:
+The database migration automatically provisions the following test accounts with PBKDF2 cryptographic password hashing:
 
 | Role | Username | Password | Access Scope |
 |---|---|---|---|
-| **Administrator** | `admin` | `Admin@123` | Complete school management |
-| **Principal** | `principal` | `Principal@123` | Academic supervision & report approval |
-| **Teacher** | `teacher` | `Teacher@123` | Assigned classes & mark entry |
-| **Registrar** | `registrar` | `Registrar@123` | Student admissions & records |
-| **Attendance Officer** | `attendance` | `Attendance@123` | Daily school-wide attendance |
-| **Student** | `student` | `Student@123` | Child-friendly student portal & report card |
+| **Administrator** | `admin` | `admin123` | Complete school management & user control |
+| **Principal** | `principal` | `principal123` | Academic supervision & report card approval |
+| **Teacher** | `teacher.abebe` | `teacher123` | Assigned classes, attendance, and mark entry |
+| **Registrar** | `registrar` | `registrar123` | Student admissions & multi-year progression |
+| **Attendance Officer** | `attendance` | `attendance123` | Daily school-wide attendance recording |
+| **Student** | `student.dawit` | `student123` | Child-friendly student portal & report card |
 
 ---
 
@@ -215,7 +225,7 @@ student-registration-system/
 ## 🛡️ 9. Security & Privacy for Children
 
 1. **Child Privacy By Default**: Student personal records, contact details, and grades are protected by server-side authorization. Direct URL tampering returns `403 Forbidden`.
-2. **Cryptographic Password Hashing**: Utilizes SHA-256 with cryptographically generated per-user 16-byte random salts.
+2. **Cryptographic Password Hashing**: Utilizes PBKDF2WithHmacSHA256 (65,536 iterations) with cryptographically generated per-user 16-byte random salts and constant-time digest verification (`MessageDigest.isEqual`).
 3. **Session Fixation Defense**: Active session IDs are destroyed and regenerated upon authentication.
 4. **Anti-CSRF Protection**: State-changing POST submissions require session CSRF token verification.
 5. **SQL Injection Immunity**: 100% of database queries utilize parameterized JDBC `PreparedStatement` instances.
