@@ -50,32 +50,32 @@ public class AuthFilter implements Filter {
         }
 
         // 3. Strict Server-Side RBAC Enforcement
-        if (path.startsWith("/admin/")) {
+        if (path.equals("/admin") || path.startsWith("/admin/")) {
             if (role != Role.ADMIN) {
                 res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Administrator privileges required");
                 return;
             }
-        } else if (path.startsWith("/principal/")) {
+        } else if (path.equals("/principal") || path.startsWith("/principal/")) {
             if (role != Role.PRINCIPAL && role != Role.ADMIN) {
                 res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Principal privileges required");
                 return;
             }
-        } else if (path.startsWith("/registrar/")) {
+        } else if (path.equals("/registrar") || path.startsWith("/registrar/")) {
             if (role != Role.REGISTRAR && role != Role.ADMIN) {
                 res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Registrar privileges required");
                 return;
             }
-        } else if (path.startsWith("/teacher/")) {
+        } else if (path.equals("/teacher") || path.startsWith("/teacher/")) {
             if (role != Role.TEACHER && role != Role.ADMIN) {
                 res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Teacher privileges required");
                 return;
             }
-        } else if (path.startsWith("/attendance/")) {
+        } else if (path.equals("/attendance") || path.startsWith("/attendance/")) {
             if (role != Role.ATTENDANCE_OFFICER && role != Role.TEACHER && role != Role.ADMIN) {
                 res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Attendance Officer privileges required");
                 return;
             }
-        } else if (path.startsWith("/student/")) {
+        } else if (path.equals("/student") || path.startsWith("/student/")) {
             if (role != Role.STUDENT && role != Role.ADMIN) {
                 res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied: Student access only");
                 return;
