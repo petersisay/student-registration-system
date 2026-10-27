@@ -142,16 +142,21 @@
     </div>
 </nav>
 
-<!-- Hero Banner with Movable School Background & Bule Hora Logo -->
-<section class="hero-banner-bule-hora text-center">
-    <div class="hero-bg-anim"></div>
-    <div class="hero-overlay-gradient"></div>
+<!-- Hero Banner with Dark Futuristic Neon Wave Parallax Background & Bule Hora Logo -->
+<section class="futuristic-hero-banner text-center">
+    <div class="wave-bg-anim"></div>
+    <div class="wave-overlay-glow"></div>
     <div class="container position-relative" style="z-index: 3;">
         <img src="<%= request.getContextPath() %>/images/bule-hora-logo.png" alt="Bule Hora School Logo" class="school-logo-lg">
-        <h1 class="display-5 fw-bold mb-2 text-white">
+        <div class="mb-2">
+            <span class="badge-neon">
+                <i class="bi bi-cpu me-1"></i><%= isAmharic ? "ዘመናዊ ዲጂታል ትምህርት ቤት አስተዳደር" : "Next-Gen Elementary School Platform" %>
+            </span>
+        </div>
+        <h1 class="display-5 fw-bold mb-2 text-white neon-glow-cyan">
             <%= isAmharic ? "ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት" : "Bule Hora Elementary School" %>
         </h1>
-        <p class="lead mb-4 mx-auto" style="max-width: 720px; color: #F1F5F9;">
+        <p class="lead mb-4 mx-auto" style="max-width: 740px; color: #E2E8F0; text-shadow: 0 2px 8px rgba(0,0,0,0.7);">
             <%= isAmharic 
                 ? "የ1ኛ እስከ 8ኛ ክፍል የተሟላ የትምህርት ቤት መረጃ አስተዳደር ሥርዓት - ተማሪዎች፣ ምዘና፣ የተገኝነት ክትትልና የውጤት ካርድ።" 
                 : "Modern, bilingual elementary school management platform for Grades 1–8. Streamlining admissions, daily attendance, continuous assessments, and official report cards." 
@@ -161,12 +166,12 @@
             <a href="<%= request.getContextPath() %>/login" class="btn btn-shine btn-shine-gold text-dark fw-bold px-4 py-3 fs-5 shadow">
                 <i class="bi bi-shield-lock-fill me-2"></i><%= isAmharic ? "የሰራተኞችና የተማሪዎች መግቢያ" : "Staff & Student Portal" %>
             </a>
-            <a href="<%= request.getContextPath() %>/students" class="btn btn-outline-light px-4 py-3 fs-5">
+            <a href="<%= request.getContextPath() %>/students" class="btn btn-outline-light px-4 py-3 fs-5" style="border-color: rgba(0, 242, 254, 0.5); backdrop-filter: blur(8px);">
                 <i class="bi bi-search me-2"></i><%= isAmharic ? "የተማሪዎችን ማውጫ ፈልግ" : "Browse Student Directory" %>
             </a>
         </div>
-        <div class="mt-4 pt-2 text-warning small font-monospace">
-            <i class="bi bi-geo-alt-fill me-1"></i>Bule Hora, West Guji Zone, Oromia, Ethiopia &bull; <%= isAmharic ? "የትምህርት ዘመን፡ 2019 ዓ.ም (2026/2027)" : "Academic Year: 2026/2027 (2019 E.C.)" %>
+        <div class="mt-4 pt-2 text-info small font-monospace">
+            <i class="bi bi-geo-alt-fill me-1 text-warning"></i>Bule Hora, West Guji Zone, Oromia, Ethiopia &bull; <%= isAmharic ? "የትምህርት ዘመን፡ 2019 ዓ.ም (2026/2027)" : "Academic Year: 2026/2027 (2019 E.C.)" %>
         </div>
     </div>
 </section>
