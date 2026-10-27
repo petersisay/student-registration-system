@@ -3,10 +3,9 @@
 -- V2__seed_ethiopian_elementary_data.sql: Reference Data & Seed Records
 -- ============================================================================
 
--- 1. Seed School Information
 INSERT INTO schools (id, name, code, logo_url, phone, email, address, default_locale)
-VALUES (1, 'Addis Tesfa Elementary School (አዲስ ተስፋ የመጀመሪያ ደረጃ ትምህርት ቤት)', 'ATES-001', 'images/school_logo.png', '+251 11 123 4567', 'contact@addistesfa.edu.et', 'Arada Sub-City, Addis Ababa, Ethiopia', 'en')
-ON DUPLICATE KEY UPDATE name=VALUES(name);
+VALUES (1, 'Bule Hora Elementary School (ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት)', 'BHES-001', 'images/bule-hora-logo.png', '+251 46 443 0123', 'contact@bulehora.edu.et', 'Bule Hora, West Guji Zone, Oromia, Ethiopia', 'en')
+ON DUPLICATE KEY UPDATE name=VALUES(name), logo_url=VALUES(logo_url), email=VALUES(email), address=VALUES(address);
 
 -- 2. Seed Academic Year & Semesters (Ethiopian Academic Calendar)
 INSERT INTO academic_years (id, name, start_date, end_date, is_current)
