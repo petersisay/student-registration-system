@@ -1,0 +1,426 @@
+/* ============================================================================
+   Ethiopian Elementary School Management System (Grades 1-8)
+   Modern Design System, Flowing Backgrounds, and Shiny Hover Buttons
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-navy: #17324D;
+    --primary-blue: #2563EB;
+    --primary-blue-hover: #1D4ED8;
+    --accent-teal: #0F9D8A;
+    --warm-gold: #F4B942;
+    --bg-page: #F5F7FB;
+    --bg-surface: #FFFFFF;
+    --text-main: #1F2937;
+    --text-muted: #64748B;
+    --color-success: #15803D;
+    --color-warning: #B45309;
+    --color-error: #B91C1C;
+    --border-color: #E2E8F0;
+    --shadow-sm: 0 1px 3px rgba(23, 50, 77, 0.08);
+    --shadow-md: 0 4px 12px rgba(23, 50, 77, 0.08);
+    --shadow-lg: 0 10px 25px rgba(23, 50, 77, 0.12);
+    --shadow-shine: 0 0 15px rgba(37, 99, 235, 0.45);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: 'Inter', 'Noto Sans Ethiopic', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle Flowing Learning Shapes Background */
+.flowing-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.65;
+}
+
+.shape-blob {
+    position: absolute;
+    filter: blur(60px);
+    border-radius: 50%;
+    animation: floatShape 18s ease-in-out infinite alternate;
+}
+
+.blob-1 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(15, 157, 138, 0.05) 70%);
+    top: -100px;
+    right: -50px;
+    animation-duration: 22s;
+}
+
+.blob-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(244, 185, 66, 0.10) 0%, rgba(37, 99, 235, 0.04) 70%);
+    bottom: -150px;
+    left: -100px;
+    animation-duration: 26s;
+    animation-direction: alternate-reverse;
+}
+
+@keyframes floatShape {
+    0% { transform: translateY(0px) rotate(0deg) scale(1); }
+    50% { transform: translateY(35px) rotate(15deg) scale(1.08); }
+    100% { transform: translateY(-25px) rotate(-10deg) scale(0.95); }
+}
+
+/* Top Navigation Bar */
+.navbar-custom {
+    background-color: var(--primary-navy);
+    color: #FFFFFF;
+    box-shadow: var(--shadow-md);
+    padding: 0.75rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: #FFFFFF !important;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.15rem;
+    text-decoration: none;
+}
+
+.navbar-brand .school-badge {
+    background: linear-gradient(135deg, var(--warm-gold), #E69D1E);
+    color: var(--primary-navy);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.nav-link-custom {
+    color: #E2E8F0 !important;
+    font-weight: 500;
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.nav-link-custom:hover {
+    color: #FFFFFF !important;
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Language Selector Pill */
+.lang-selector {
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.lang-btn {
+    border: none;
+    background: transparent;
+    color: #E2E8F0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.lang-btn.active {
+    background: var(--primary-blue);
+    color: #FFFFFF;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+}
+
+.lang-btn:hover:not(.active) {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Page Layout */
+.app-container {
+    max-width: 1320px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+/* Modern Cards */
+.card-modern {
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-modern:hover {
+    box-shadow: var(--shadow-md);
+    border-color: #CBD5E1;
+}
+
+.card-header-clean {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.card-title-clean {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin: 0;
+}
+
+/* Shiny Hover Buttons */
+.btn-shine {
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    padding: 0.6rem 1.4rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid transparent;
+    text-decoration: none;
+}
+
+.btn-shine-primary {
+    background-color: var(--primary-blue);
+    color: #FFFFFF;
+    border-color: var(--primary-blue);
+}
+
+.btn-shine-primary:hover {
+    background-color: var(--primary-blue-hover);
+    color: #FFFFFF;
+    box-shadow: var(--shadow-shine);
+    transform: translateY(-1px);
+}
+
+.btn-shine-teal {
+    background-color: var(--accent-teal);
+    color: #FFFFFF;
+}
+
+.btn-shine-teal:hover {
+    background-color: #0c8272;
+    color: #FFFFFF;
+    box-shadow: 0 0 15px rgba(15, 157, 138, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-shine-gold {
+    background-color: var(--warm-gold);
+    color: var(--primary-navy);
+}
+
+.btn-shine-gold:hover {
+    background-color: #e5a72e;
+    color: var(--primary-navy);
+    box-shadow: 0 0 15px rgba(244, 185, 66, 0.45);
+    transform: translateY(-1px);
+}
+
+.btn-shine-outline {
+    background: transparent;
+    color: var(--primary-navy);
+    border-color: var(--border-color);
+}
+
+.btn-shine-outline:hover {
+    background: #F1F5F9;
+    border-color: #CBD5E1;
+    transform: translateY(-1px);
+}
+
+/* Button sweep effect on hover */
+.btn-shine::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+    transform: rotateZ(60deg) translate(-5em, 7.5em);
+    opacity: 0;
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+}
+
+.btn-shine:hover::after {
+    opacity: 1;
+    transform: rotateZ(60deg) translate(10em, -10em);
+}
+
+/* Metric / Stat Cards */
+.stat-card {
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: #CBD5E1;
+}
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-icon-blue { background: rgba(37, 99, 235, 0.12); color: var(--primary-blue); }
+.stat-icon-teal { background: rgba(15, 157, 138, 0.12); color: var(--accent-teal); }
+.stat-icon-gold { background: rgba(244, 185, 66, 0.18); color: #B45309; }
+.stat-icon-navy { background: rgba(23, 50, 77, 0.10); color: var(--primary-navy); }
+
+.stat-number {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    line-height: 1.1;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Status Badges */
+.badge-status {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.badge-present { background: #DCFCE7; color: #166534; }
+.badge-absent { background: #FEE2E2; color: #991B1B; }
+.badge-late { background: #FEF3C7; color: #92400E; }
+.badge-excused { background: #E0E7FF; color: #3730A3; }
+.badge-active { background: #DCFCE7; color: #166534; }
+.badge-promoted { background: #E0F2FE; color: #075985; }
+.badge-draft { background: #F1F5F9; color: #475569; }
+.badge-published { background: #DCFCE7; color: #166534; }
+
+/* Clean Data Tables */
+.table-clean {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 0;
+}
+
+.table-clean th {
+    background-color: #F8FAFC;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table-clean td {
+    padding: 0.95rem 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.92rem;
+}
+
+.table-clean tr:hover td {
+    background-color: #F8FAFC;
+}
+
+/* Report Card Print Layout */
+@media print {
+    .navbar-custom, .btn-shine, .no-print, .flowing-bg {
+        display: none !important;
+    }
+    body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+    }
+    .card-modern {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+    .print-only {
+        display: block !important;
+    }
+}
+
+/* Reduced Motion Consideration */
+@media (prefers-reduced-motion: reduce) {
+    .shape-blob, .btn-shine, .card-modern, .stat-card {
+        animation: none !important;
+        transition: none !important;
+    }
+    .btn-shine::after {
+        display: none !important;
+    }
+}
