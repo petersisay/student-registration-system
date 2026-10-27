@@ -345,6 +345,21 @@ body {
     box-shadow: 0 0 12px rgba(0, 242, 254, 0.2);
 }
 
+/* Clean Portal Content Sections (Guaranteed High Contrast & Readability) */
+.portal-main-content {
+    background-color: var(--bg-page);
+    position: relative;
+    z-index: 10;
+}
+
+.app-footer {
+    background: #FFFFFF !important;
+    border-top: 1px solid var(--border-color);
+    padding: 2.5rem 1rem;
+    position: relative;
+    z-index: 10;
+}
+
 .nav-link-custom {
     color: #E2E8F0 !important;
     font-weight: 500;
