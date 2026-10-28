@@ -62,6 +62,11 @@
 
                     <% if (currentUser.getRole() == Role.ADMIN) { %>
                         <li class="nav-item">
+                            <a class="nav-link-custom" href="<%= ctx %>/admin/users">
+                                <i class="bi bi-people-gear"></i> <%= I18nUtil.getMessage(currentLocale, "nav.users") %>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link-custom" href="<%= ctx %>/admin/teachers">
                                 <i class="bi bi-person-badge"></i> <%= I18nUtil.getMessage(currentLocale, "nav.teachers") %>
                             </a>

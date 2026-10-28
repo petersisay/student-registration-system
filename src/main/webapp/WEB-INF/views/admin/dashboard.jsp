@@ -33,7 +33,10 @@
             <%= I18nUtil.getMessage(currentLocale, "app.name") %> &bull; <%= year != null ? year.getName() : "2026/2027" %>
         </p>
     </div>
-    <div class="d-flex gap-2">
+    <div class="d-flex flex-wrap gap-2">
+        <a href="<%= ctx %>/admin/users" class="btn btn-shine btn-shine-gold">
+            <i class="bi bi-people-gear"></i> <%= I18nUtil.getMessage(currentLocale, "nav.users") %>
+        </a>
         <a href="<%= ctx %>/students?action=new" class="btn btn-shine btn-shine-primary">
             <i class="bi bi-person-plus-fill"></i> <%= I18nUtil.getMessage(currentLocale, "nav.student_register") %>
         </a>
