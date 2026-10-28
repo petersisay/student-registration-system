@@ -266,29 +266,29 @@
         <div class="p-4 bg-white rounded-3 border shadow-sm">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
                 <h5 class="fw-bold mb-0 text-navy" style="color: var(--primary-navy);">
-                    <i class="bi bi-key-fill text-warning me-2"></i><%= isAmharic ? "የትምህርት ቤቱ መግቢያ መለያዎች (ለሙከራ)" : "School Portal Test Accounts" %>
+                    <i class="bi bi-shield-lock-fill text-primary me-2"></i><%= isAmharic ? "የትምህርት ቤቱ መግቢያ ፖርታሎች" : "School Management Portals" %>
                 </h5>
                 <a href="<%= request.getContextPath() %>/login" class="btn btn-sm btn-primary">
-                    <i class="bi bi-box-arrow-in-right me-1"></i><%= isAmharic ? "አሁን ግባ" : "Sign In Now" %>
+                    <i class="bi bi-box-arrow-in-right me-1"></i><%= isAmharic ? "ወደ ፖርታል ግባ" : "Sign In to Portal" %>
                 </a>
             </div>
             <div class="row g-3">
                 <div class="col-md-4">
                     <div class="p-3 border rounded bg-light">
-                        <div class="fw-bold text-dark"><i class="bi bi-person-gear text-primary me-1"></i> Administrator</div>
-                        <div class="small text-muted font-monospace mt-1">Username: <strong>admin</strong> | Password: <strong>admin123</strong></div>
+                        <div class="fw-bold text-dark"><i class="bi bi-person-gear text-primary me-1"></i> <%= isAmharic ? "የትምህርት ቤት አስተዳዳሪ" : "Administration" %></div>
+                        <div class="small text-muted mt-1"><%= isAmharic ? "የተጠቃሚዎች አስተዳደር፣ ምደባ እና አጠቃላይ ቁጥጥር" : "User provisioning, admissions & operations" %></div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="p-3 border rounded bg-light">
-                        <div class="fw-bold text-dark"><i class="bi bi-person-video3 text-success me-1"></i> Teacher (Abebe)</div>
-                        <div class="small text-muted font-monospace mt-1">Username: <strong>teacher.abebe</strong> | Password: <strong>teacher123</strong></div>
+                        <div class="fw-bold text-dark"><i class="bi bi-person-video3 text-success me-1"></i> <%= isAmharic ? "መምህራን እና ፋኩልቲ" : "Faculty & Teachers" %></div>
+                        <div class="small text-muted mt-1"><%= isAmharic ? "የክፍል ክትትል፣ የተከታታይ ምዘና እና ውጤት" : "Class attendance, mark entry & schedules" %></div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="p-3 border rounded bg-light">
-                        <div class="fw-bold text-dark"><i class="bi bi-backpack text-info me-1"></i> Student (Dawit)</div>
-                        <div class="small text-muted font-monospace mt-1">Username: <strong>student.dawit</strong> | Password: <strong>student123</strong></div>
+                        <div class="fw-bold text-dark"><i class="bi bi-backpack text-info me-1"></i> <%= isAmharic ? "ተማሪዎች እና ወላጆች" : "Students & Guardians" %></div>
+                        <div class="small text-muted mt-1"><%= isAmharic ? "የትምህርት ሰሌዳ፣ የክትትል መረጃ እና የውጤት ካርድ" : "Timetable, daily attendance & term report cards" %></div>
                     </div>
                 </div>
             </div>
