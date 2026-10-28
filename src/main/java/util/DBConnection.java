@@ -1,5 +1,6 @@
 package util;
 
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,14 +8,16 @@ import java.sql.Statement;
 
 /**
  * Enterprise Database Connection Manager.
- * Supports environment variables (DB_URL, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME),
- * connection parameters for utf8mb4 and timezone support, and auto-creation of the database.
+ * Supports environment variables (DATABASE_URL, MYSQL_URL, DB_URL, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME),
+ * SSL modes for cloud providers (Aiven, TiDB, Railway, Render),
+ * connection parameters for utf8mb4 and timezone support, and auto-creation of local databases.
  */
 public class DBConnection {
 
     private static String dbUrl;
     private static String dbUser;
     private static String dbPassword;
+    private static boolean isRemote = false;
     private static boolean initialized = false;
 
     static {
@@ -32,7 +35,7 @@ public class DBConnection {
             String uri = cloudDatabaseUrl.trim();
             if (uri.startsWith("mysql://")) {
                 try {
-                    java.net.URI parsed = new java.net.URI(uri);
+                    URI parsed = new URI(uri);
                     String userInfo = parsed.getUserInfo();
                     if (userInfo != null && userInfo.contains(":")) {
                         String[] parts = userInfo.split(":", 2);
@@ -46,9 +49,19 @@ public class DBConnection {
                     if (path != null && path.startsWith("/")) {
                         path = path.substring(1);
                     }
+                    if (path == null || path.isEmpty()) {
+                        path = "defaultdb";
+                    }
                     int p = parsed.getPort() > 0 ? parsed.getPort() : 3306;
-                    dbUrl = "jdbc:mysql://" + parsed.getHost() + ":" + p + "/" + path
-                            + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Africa/Addis_Ababa&characterEncoding=UTF-8";
+                    String h = parsed.getHost();
+                    isRemote = h != null && !h.equalsIgnoreCase("localhost") && !h.equals("127.0.0.1");
+
+                    String sslParams = isRemote 
+                            ? "useSSL=true&trustServerCertificate=true&allowPublicKeyRetrieval=true"
+                            : "useSSL=false&allowPublicKeyRetrieval=true";
+
+                    dbUrl = "jdbc:mysql://" + h + ":" + p + "/" + path
+                            + "?" + sslParams + "&serverTimezone=UTC&characterEncoding=UTF-8";
                     return;
                 } catch (Exception ignored) {
                 }
@@ -62,13 +75,21 @@ public class DBConnection {
 
         if (envUrl != null && !envUrl.trim().isEmpty()) {
             dbUrl = envUrl.trim();
+            isRemote = !dbUrl.contains("localhost") && !dbUrl.contains("127.0.0.1");
         } else if (host != null && !host.trim().isEmpty()) {
             String p = (port != null && !port.trim().isEmpty()) ? port.trim() : "3306";
             String d = (dbName != null && !dbName.trim().isEmpty()) ? dbName.trim() : "student_db";
+            isRemote = !host.trim().equalsIgnoreCase("localhost") && !host.trim().equals("127.0.0.1");
+
+            String sslParams = isRemote 
+                    ? "useSSL=true&trustServerCertificate=true&allowPublicKeyRetrieval=true"
+                    : "useSSL=false&allowPublicKeyRetrieval=true";
+
             dbUrl = "jdbc:mysql://" + host.trim() + ":" + p + "/" + d
-                    + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Africa/Addis_Ababa&characterEncoding=UTF-8";
+                    + "?" + sslParams + "&serverTimezone=UTC&characterEncoding=UTF-8";
         } else {
             // Default local setup
+            isRemote = false;
             dbUrl = "jdbc:mysql://localhost:3306/student_db"
                     + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Africa/Addis_Ababa&characterEncoding=UTF-8";
         }
@@ -88,7 +109,7 @@ public class DBConnection {
             throw new SQLException("MySQL JDBC Driver not found", e);
         }
 
-        // On first connection attempt, ensure the target database exists
+        // On first connection attempt, ensure the target database exists (for local environments)
         ensureDatabaseExists();
 
         try {
@@ -106,17 +127,17 @@ public class DBConnection {
     }
 
     private static synchronized void ensureDatabaseExists() {
-        if (initialized) {
+        if (initialized || isRemote) {
+            initialized = true;
             return;
         }
         try {
-            // Connect to MySQL server root without database specified
+            // Connect to local MySQL server root without database specified
             String serverUrl = "jdbc:mysql://localhost:3306/?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Africa/Addis_Ababa";
             try (Connection conn = DriverManager.getConnection(serverUrl, dbUser, dbPassword);
                  Statement stmt = conn.createStatement()) {
                 stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS student_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
-            } catch (Exception e) {
-                // Ignore if running in a restricted cloud environment where database is already created
+            } catch (Exception ignored) {
             }
             initialized = true;
         } catch (Exception e) {
