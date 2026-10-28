@@ -8,6 +8,7 @@ import java.sql.Date;
 public class Teacher {
     private int id;
     private Integer userId;
+    private String username;
     private String employeeId;
     private String fullNameEn;
     private String fullNameAm;
@@ -35,6 +36,9 @@ public class Teacher {
 
     public Integer getUserId() { return userId; }
     public void setUserId(Integer userId) { this.userId = userId; }
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
     public String getEmployeeId() { return employeeId; }
     public void setEmployeeId(String employeeId) { this.employeeId = employeeId; }
