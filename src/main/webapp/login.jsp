@@ -58,18 +58,6 @@
         .login-card .form-control::placeholder {
             color: #94A3B8;
         }
-        .credentials-pill {
-            font-size: 0.8rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px dashed rgba(0, 242, 254, 0.3);
-            border-radius: 8px;
-            padding: 0.75rem;
-            margin-top: 1.5rem;
-            color: #CBD5E1;
-        }
-        .credentials-pill strong {
-            color: #00F2FE;
-        }
     </style>
 </head>
 <body>
@@ -120,7 +108,7 @@
                 <label class="form-label fw-semibold small text-muted"><%= I18nUtil.getMessage(currentLocale, "auth.username") %></label>
                 <div class="input-group">
                     <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-person"></i></span>
-                    <input type="text" name="username" class="form-control border-start-0" placeholder="e.g. admin, teacher.abebe, student.dawit" required autofocus>
+                    <input type="text" name="username" class="form-control border-start-0" placeholder="Username / የተጠቃሚ ስም" required autofocus>
                 </div>
             </div>
 
@@ -136,18 +124,6 @@
                 <i class="bi bi-box-arrow-in-right"></i> <%= I18nUtil.getMessage(currentLocale, "auth.login") %>
             </button>
         </form>
-
-        <!-- Quick Demo Credentials Guide for Testing -->
-        <div class="credentials-pill">
-            <div class="fw-bold text-dark small mb-1"><i class="bi bi-key-fill text-warning"></i> Demo Accounts (Grades 1-8):</div>
-            <div class="d-flex flex-wrap gap-2 text-secondary" style="font-size: 0.75rem;">
-                <span class="badge bg-light text-dark border">Admin: <code>admin</code> / <code>admin123</code></span>
-                <span class="badge bg-light text-dark border">Teacher: <code>teacher.abebe</code> / <code>teacher123</code></span>
-                <span class="badge bg-light text-dark border">Registrar: <code>registrar</code> / <code>registrar123</code></span>
-                <span class="badge bg-light text-dark border">Principal: <code>principal</code> / <code>principal123</code></span>
-                <span class="badge bg-light text-dark border">Student: <code>student.dawit</code> / <code>student123</code></span>
-            </div>
-        </div>
 
         <div class="text-center mt-3">
             <a href="<%= ctx %>/index.jsp" class="text-decoration-none small text-muted">
