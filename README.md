@@ -2,13 +2,40 @@
 ### Bule Hora Elementary School Information Management System
 **ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት መረጃ አስተዳደር ሥርዓት (ከ1ኛ - 8ኛ ክፍል)**
 
-[![Java](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://openjdk.org/)
-[![Jakarta EE](https://img.shields.io/badge/Jakarta%20EE-10.0-orange.svg)](https://jakarta.ee/)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-00758F.svg)](https://www.mysql.com/)
-[![Tomcat](https://img.shields.io/badge/Tomcat-10.1-yellow.svg)](https://tomcat.apache.org/)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3.svg)](https://getbootstrap.com/)
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
+[![Live Deployment](https://img.shields.io/badge/Render-Live%20Online-00c58e.svg?logo=render&logoColor=white)](https://bule-hora-elementary-school.onrender.com)
+[![Java](https://img.shields.io/badge/Java-17%2B-blue.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![Jakarta EE](https://img.shields.io/badge/Jakarta%20EE-10.0-orange.svg?logo=eclipse&logoColor=white)](https://jakarta.ee/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-00758F.svg?logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Tomcat](https://img.shields.io/badge/Tomcat-10.1-yellow.svg?logo=apachetomcat&logoColor=white)](https://tomcat.apache.org/)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3.svg?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+[![Tests Passing](https://img.shields.io/badge/Tests-7%2F7%20Passing-brightgreen.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+---
+
+## 🌐 Live Production Deployment
+
+The application is deployed live in production on free cloud infrastructure:
+- **Production URL**: **[https://bule-hora-elementary-school.onrender.com](https://bule-hora-elementary-school.onrender.com)**
+- **Cloud Platform**: Render Web Services (Dockerized Java 17 Runtime)
+- **Database Engine**: Aiven Cloud MySQL 8.x (SSL Encrypted)
+- **Local Dev Tunnel**: `https://bule-hora-school.loca.lt` (Bypass password: `196.191.52.71`)
+
+---
+
+## 📋 Table of Contents
+1. [Project Overview & Educational Problem](#-1-project-overview--educational-problem)
+2. [Key Capabilities & Solution Highlights](#-2-key-capabilities--solution-highlights)
+3. [System Architecture & Request Lifecycle](#%EF%B8%8F-3-system-architecture--request-lifecycle)
+4. [Role-Based Access Control (RBAC) Matrix](#-4-role-based-access-control-rbac-matrix)
+5. [Database Schema & Multi-Year Progression](#-5-database-schema--multi-year-progression)
+6. [Security & Child Privacy Architecture](#-6-security--child-privacy-architecture)
+7. [Automated Testing & Quality Assurance](#-7-automated-testing--quality-assurance)
+8. [Local Setup & Quick Execution](#-8-local-setup--quick-execution)
+9. [Free Cloud Deployment Guide](#-9-free-cloud-deployment-guide)
+10. [Offline Release Archive](#-10-offline-release-archive)
+11. [Project Directory Structure](#-11-project-directory-structure)
+12. [License & Authorship](#-12-license--authorship)
 
 ---
 
@@ -25,10 +52,12 @@ Traditional paper-based school operations in elementary schools suffer from:
 5. **Slow Manual Report Card Generation**: Calculating ranks, term averages, conduct scores, and attendance roll for hundreds of students takes weeks of manual arithmetic.
 6. **Uncontrolled Credential Management**: Staff and faculty lack self-contained, securely managed user credentials with role-specific authorization.
 
-### The Solution: Bule Hora Elementary System
-This modernized platform provides a unified, secure, bilingual digital hub featuring:
+---
+
+## 🌟 2. Key Capabilities & Solution Highlights
+
 - **Centralized User Account & Credential Provisioning**: The Administrator can register teachers and all staff roles with custom, admin-assigned usernames and passwords. Users subsequently log in using their own unique credentials every time.
-- **On-Demand Password Resets**: Administrators can reset or update passwords for any faculty or staff member at any time directly through the UI.
+- **On-Demand Password Resets**: Administrators can reset or update passwords for any faculty or staff member at any time directly through the UI without database intervention.
 - **Historical Academic Record Preservation**: Multi-year student enrollment tables ensure that promoting a student creates a new active enrollment while archiving previous grade records without deletion.
 - **Explicit Role-Based Access Control (RBAC)**: Teachers can *only* take attendance and enter marks for classes and subjects explicitly assigned to them by the administrator.
 - **Full Bilingual Localization**: Seamless 1-click toggle between **English** and **አማርኛ (Amharic)** across every dashboard, form, table, report, and modal with UTF-8 / `utf8mb4` support.
@@ -39,7 +68,7 @@ This modernized platform provides a unified, secure, bilingual digital hub featu
 
 ---
 
-## 🏛️ 2. System Architecture & Request Lifecycle
+## 🏛️ 3. System Architecture & Request Lifecycle
 
 The application adheres strictly to the classic **MVC (Model-View-Controller)** pattern powered by **Jakarta Servlets**, **JSP**, **JSTL**, and native **JDBC** over an **InnoDB MySQL** relational database.
 
@@ -91,7 +120,7 @@ The application adheres strictly to the classic **MVC (Model-View-Controller)** 
 
 ---
 
-## 👥 3. Role-Based Permissions Matrix
+## 👥 4. Role-Based Access Control (RBAC) Matrix
 
 | Module / Operation | Administrator | Principal | Teacher | Registrar | Attendance Officer | Student |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -109,7 +138,7 @@ The application adheres strictly to the classic **MVC (Model-View-Controller)** 
 
 ---
 
-## 📊 4. Database Schema & Key Integrity Rules
+## 📊 5. Database Schema & Multi-Year Progression
 
 The database features 20 normalized tables with strict foreign keys and transactional integrity:
 - **`users`**: Central authentication table (`id`, `username` UNIQUE, `password_hash`, `password_salt`, `role`, `full_name`, `email`, `phone`, `preferred_locale`, `is_active`, `created_at`).
@@ -123,88 +152,83 @@ The database features 20 normalized tables with strict foreign keys and transact
 
 ---
 
-## 🚀 5. Local Setup & Quick Execution
+## 🛡️ 6. Security & Child Privacy Architecture
+
+1. **Child Privacy By Default**: Student personal records, contact details, and marks are strictly guarded by server-side authorization. Direct URL tampering returns `403 Forbidden`.
+2. **Cryptographic Password Hashing**: Utilizes PBKDF2WithHmacSHA256 (65,536 iterations) with cryptographically generated per-user 16-byte random salts and constant-time digest verification (`MessageDigest.isEqual`).
+3. **Session Fixation Defense**: Active session IDs are destroyed and regenerated upon authentication.
+4. **Anti-CSRF Protection**: State-changing POST submissions across all admin, faculty, and student forms require session CSRF token verification.
+5. **SQL Injection Immunity**: 100% of database queries utilize parameterized JDBC `PreparedStatement` instances.
+6. **XSS Prevention**: All user-submitted fields rendered in JSP templates utilize `<c:out>` escaping or JSTL equivalent.
+7. **Clean Production Views**: No raw default credentials or test passwords appear on public login cards or landing pages.
+
+---
+
+## 🧪 7. Automated Testing & Quality Assurance
+
+The test suite covers unit and integration validations executed automatically via Maven:
+
+```powershell
+.\mvnw.cmd test
+```
+
+### Verified Test Suites (100% Passing):
+| Test Suite | Scope | Status |
+|---|---|:---:|
+| `ScoreCalculationTest` | Grade thresholds (`A`-`F`), weighted averages, rank calculations | ✅ Passed |
+| `StudentProgressionTest` | Multi-year promotion, enrollment status transitions, archive integrity | ✅ Passed |
+| `TeacherAssignmentSecurityTest` | Unauthorized class access rejection, explicit subject authorization | ✅ Passed |
+| `AuthFilterTest` | Route protection, role enforcement, unauthenticated redirects | ✅ Passed |
+| `DatabaseMigrationTest` | DDL execution, table creation, seed data validation | ✅ Passed |
+| `I18nUtilTest` | English & Amharic message bundle resolution | ✅ Passed |
+| `PasswordUtilTest` | PBKDF2 cryptographic hashing, random salt generation, verification | ✅ Passed |
+
+---
+
+## 🚀 8. Local Setup & Quick Execution
 
 ### Prerequisites
 - **Java**: JDK 17 or higher (`java -version`)
-- **MySQL**: 8.0 or higher running on `localhost:3306` (e.g. WAMP, XAMPP, or standalone MySQL)
+- **MySQL**: 8.0 or higher running on `localhost:3306` (or any remote MySQL instance)
 - **Maven**: Maven wrapper `mvnw` included with the repository.
 
-### Step-by-Step Instructions
-
+### Quick Start
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/petersisay/student-registration-system.git
    cd student-registration-system
    ```
 
-2. **Verify or Configure Database Connection**:
-   By default, `DBConnection.java` connects to `localhost:3306` with user `root` and blank password, automatically creating `student_db` and executing migrations.
-   To override credentials, set environment variables:
-   ```powershell
-   $env:DB_USER="root"
-   $env:DB_PASSWORD=""
-   ```
-
-3. **Run Automated Tests**:
-   ```powershell
-   .\mvnw.cmd test
-   ```
-   *All 7 automated test suites (AuthFilter, DB Migration, I18n, Score Calculation, Progression, Teacher Authorization, and PBKDF2 Password Security) execute and pass 100%.*
-
-4. **Launch the Application**:
+2. **Launch the Embedded Server**:
    ```powershell
    .\mvnw.cmd compile exec:java
    ```
    *The embedded Tomcat 10.1 server starts immediately on `http://localhost:8080/`.*
 
-5. **Open Browser & Verified Route Summary**:
+3. **Access the Application**:
    Navigate to [http://localhost:8080/](http://localhost:8080/) in your web browser.
 
-   | Route | Purpose | Access Control | Language Support |
-   |---|---|---|---|
-   | `/` or `/index.jsp` | Modern Bilingual Portal & Overview | Public | EN / አማርኛ (`?lang=am`) |
-   | `/login` | Staff & Student Authentication Portal | Public | EN / አማርኛ (`?lang=am`) |
-   | `/admin/dashboard` | Administrator Operations & Metric Cards | ADMIN role | EN / አማርኛ |
-   | `/admin/users` | User Account Provisioning & Password Resets | ADMIN role | EN / አማርኛ |
-   | `/admin/teachers` | Faculty Directory & Class/Subject Allocations | ADMIN role | EN / አማርኛ |
-   | `/students` | Searchable Student Directory & Profiles | Staff / Auth Required | EN / አማርኛ |
-   | `/teacher/dashboard`| Teacher Dashboard & Assigned Classes | TEACHER role | EN / አማርኛ |
-   | `/attendance` | Daily Attendance Roll Recording | TEACHER / ATTENDANCE | EN / አማርኛ |
-   | `/assessments` | Continuous Assessment Mark Entry | TEACHER role | EN / አማርኛ |
-   | `/reports` | Term Report Card Generation & Review | Staff / Auth Required | EN / አማርኛ |
-   | `/student/portal` | Child-Friendly Student Hub & Report Card | STUDENT role | EN / አማርኛ |
+---
+
+## 🌐 9. Free Cloud Deployment Guide
+
+The project is configured for free cloud hosting with zero cost:
+- **Render**: Deploys automatically via Docker and `render.yaml`.
+- **Aiven Cloud MySQL**: Free 5 GB managed MySQL database forever with SSL encryption.
+- **Railway.app**: 1-click GitHub deployment with automatic database URL injection.
+- Complete step-by-step instructions are available in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ---
 
-## 🔑 6. Default User Accounts (Development Fixtures)
+## 📦 10. Offline Release Archive
 
-The database migration automatically provisions the following default accounts. In production, the Administrator creates custom user credentials via `/admin/users` or `/admin/teachers`:
-
-| Role | Default Username | Default Password | Access Scope |
-|---|---|---|---|
-| **Administrator** | `admin` | `admin123` | Complete school management, user provisioning & password resets |
-| **Principal** | `principal` | `principal123` | Academic supervision, timetable review & report card approval |
-| **Teacher** | `teacher.abebe` | `teacher123` | Assigned classes, attendance, and continuous assessment marks |
-| **Registrar** | `registrar` | `registrar123` | Student admissions, profiles & multi-year grade progression |
-| **Attendance Officer** | `attendance` | `attendance123` | Daily school-wide attendance recording |
-| **Student** | `student.dawit` | `student123` | Child-friendly student portal, personal attendance & report card |
-
-> **Note on Custom Provisioning**: When the Admin creates a new teacher or staff member, they assign a custom username and password. The user logs in at `/login` using their own credentials every time.
+For offline distribution, backups, or submission:
+- The offline archive **`bule-hora-school-management-system.zip`** is located in the workspace root.
+- It includes full source code, Maven build wrapper, Dockerfile, database migrations, bilingual message bundles, documentation, and assets.
 
 ---
 
-## 🌐 7. Free Cloud Deployment Options
-
-The project includes zero-cost cloud deployment readiness:
-- **Render**: Deploy as a Web Service running `./mvnw clean package` and `java -cp target/classes:target/dependency/* com.school.runner.EmbeddedServer`.
-- **Railway.app**: Instant GitHub integration with auto-provisioned free MySQL instance.
-- **Free Cloud MySQL**: Fully compatible with Aiven (5GB free) or Clever Cloud.
-- Detailed step-by-step instructions are documented in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
-
----
-
-## 📁 8. Project Structure
+## 📁 11. Project Directory Structure
 
 ```
 student-registration-system/
@@ -231,26 +255,18 @@ student-registration-system/
 │   │       ├── js/app.js        # Micro-interactions and counter animations
 │   │       ├── login.jsp        # Bilingual animated login portal
 │   │       └── WEB-INF/views/   # Protected JSP templates by role (admin, teacher, student...)
-│   └── test/java/               # Comprehensive automated test suite
+│   └── test/java/               # Automated test suite (7/7 tests passing)
 ├── pom.xml                      # Maven configuration (Java 17, Tomcat 10.1 embed)
+├── Dockerfile                   # Multi-stage production container build
+├── render.yaml                  # Infrastructure-as-code cloud deployment manifest
 ├── bule-hora-school-management-system.zip # Complete offline release package
 └── README.md                    # Project documentation
 ```
 
 ---
 
-## 🛡️ 9. Security & Child Privacy Protection
-
-1. **Child Privacy By Default**: Student personal records, contact details, and marks are strictly guarded by server-side authorization. Direct URL tampering returns `403 Forbidden`.
-2. **Cryptographic Password Hashing**: Utilizes PBKDF2WithHmacSHA256 (65,536 iterations) with cryptographically generated per-user 16-byte random salts and constant-time digest verification (`MessageDigest.isEqual`).
-3. **Session Fixation Defense**: Active session IDs are destroyed and regenerated upon authentication.
-4. **Anti-CSRF Protection**: State-changing POST submissions across all admin, faculty, and student forms require session CSRF token verification.
-5. **SQL Injection Immunity**: 100% of database queries utilize parameterized JDBC `PreparedStatement` instances.
-6. **XSS Prevention**: All user-submitted fields rendered in JSP templates utilize `<c:out>` escaping or JSTL equivalent.
-
----
-
-## 📄 10. License & Author
+## 📄 12. License & Authorship
 - **Author**: Peter Sisay
+- **Project**: Bule Hora Elementary School Management System
 - **Repository**: [https://github.com/petersisay/student-registration-system.git](https://github.com/petersisay/student-registration-system.git)
 - **License**: MIT License
