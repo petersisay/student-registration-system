@@ -25,6 +25,7 @@ public class StudentServlet extends HttpServlet {
     private final StudentDAO studentDAO = new StudentDAO();
     private final AcademicDAO academicDAO = new AcademicDAO();
     private final SchoolOperationsDAO schoolOpsDAO = new SchoolOperationsDAO();
+    private final dao.UserDAO userDAO = new dao.UserDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -136,6 +137,30 @@ public class StudentServlet extends HttpServlet {
         int yearId = (yearStr != null && !yearStr.trim().isEmpty()) ? Integer.parseInt(yearStr.trim()) : 1;
 
         s.setYear(gradeLevelId); // For legacy compatibility
+
+        // Optional Student Portal Account Creation
+        String portalUsername = request.getParameter("portalUsername");
+        String portalPassword = request.getParameter("portalPassword");
+        if (portalUsername != null && !portalUsername.trim().isEmpty() &&
+            portalPassword != null && !portalPassword.trim().isEmpty()) {
+            String pUser = portalUsername.trim().toLowerCase();
+            if (!userDAO.existsByUsername(pUser)) {
+                String salt = util.PasswordUtil.generateSalt();
+                String hash = util.PasswordUtil.hashPassword(portalPassword.trim(), salt);
+                User u = new User();
+                u.setUsername(pUser);
+                u.setPasswordHash(hash);
+                u.setSalt(salt);
+                u.setFullName(s.getFullNameEn());
+                u.setRole(Role.STUDENT);
+                u.setEmail(s.getEmail());
+                u.setActive(true);
+                int uid = userDAO.create(u);
+                if (uid > 0) {
+                    s.setUserId(uid);
+                }
+            }
+        }
 
         if (s.getId() > 0) {
             studentDAO.update(s);

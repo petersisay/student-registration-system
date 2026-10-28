@@ -118,6 +118,37 @@
                     </div>
                 </div>
 
+                <% if (!isEdit) { %>
+                    <div class="row g-3 mb-4">
+                        <div class="col-12">
+                            <div class="p-3 bg-light rounded border">
+                                <h6 class="fw-bold mb-1 text-primary">
+                                    <i class="bi bi-shield-lock-fill me-1"></i>4. Student Portal Login Account (ተማሪው በራሱ የሚገባበት መለያ - Optional)
+                                </h6>
+                                <p class="text-muted small mb-3">
+                                    Optionally give this student a login username and password so they can access their student portal and grades.
+                                </p>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-semibold">Portal Username</label>
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                            <input type="text" name="portalUsername" class="form-control font-monospace" placeholder="e.g. dawit.yohannes">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-semibold">Portal Password</label>
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                            <input type="text" name="portalPassword" class="form-control font-monospace" placeholder="e.g. Student@2026">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+
                 <div class="d-flex justify-content-end gap-2 pt-3 border-top">
                     <a href="<%= ctx %>/students" class="btn btn-outline-secondary">
                         <%= I18nUtil.getMessage(currentLocale, "btn.cancel") %>
