@@ -1,7 +1,7 @@
-# Free Cloud Web Deployment Guide
+# Free Cloud Web Deployment & Production Guide: Bule Hora Elementary School
 
 ## 1. Overview
-The **Bule Hora Elementary School Management System** is packaged as both a standalone web application runner (`com.school.runner.EmbeddedServer`) and a standard `WAR` file (`target/StudentRegistrationApp.war`). This dual capability allows instantaneous deployment on conventional Apache Tomcat servers as well as modern containerized free-tier cloud platforms (Render, Railway, Fly.io).
+The **Bule Hora Elementary School Management System** is packaged as both a standalone web application runner (`com.school.runner.EmbeddedServer`) and a standard Java `WAR` file (`target/StudentRegistrationApp.war`). This dual capability allows instantaneous deployment on conventional Apache Tomcat servers as well as modern containerized free-tier cloud platforms (Render, Railway, Fly.io).
 
 ---
 
@@ -13,10 +13,12 @@ The **Bule Hora Elementary School Management System** is packaged as both a stan
 3. Click **New +** -> **Blueprint** or **Web Service**.
 4. Select this repository. Render automatically reads `render.yaml` and `Dockerfile`.
 5. Under Environment Variables, configure your free MySQL database credentials:
-   - `DB_URL`: `jdbc:mysql://<host>:<port>/<dbname>?useSSL=true&characterEncoding=UTF-8`
-   - `DB_USER`: `<username>`
-   - `DB_PASSWORD`: `<password>`
-6. Click **Deploy**. The system will build and launch at `https://bule-hora-elementary-school.onrender.com`.
+   - `DB_HOST`: Hostname of remote MySQL database
+   - `DB_PORT`: `3306` (or host port)
+   - `DB_NAME`: Database schema name
+   - `DB_USER`: Remote database user
+   - `DB_PASSWORD`: Remote database password
+6. Click **Deploy**. The system will build and launch automatically.
 
 ### Option B: Railway.app (Free Automatic Cloud Deployment)
 1. Sign in to [Railway.app](https://railway.app).
@@ -28,7 +30,7 @@ The **Bule Hora Elementary School Management System** is packaged as both a stan
 Build and run the production container locally or on any cloud server:
 ```bash
 docker build -t bule-hora-school:latest .
-docker run -p 8080:8080 -e DB_HOST=host.docker.internal -e DB_USER=root bule-hora-school:latest
+docker run -p 8080:8080 -e DB_HOST=host.docker.internal -e DB_USER=root -e DB_PASSWORD="" bule-hora-school:latest
 ```
 
 ---
@@ -46,16 +48,24 @@ docker run -p 8080:8080 -e DB_HOST=host.docker.internal -e DB_USER=root bule-hor
 
 ---
 
-## 4. Local Quick Start & Testing
+## 4. Default Accounts & Production Credential Provisioning
 
-1. Ensure MySQL is running on `localhost:3306`.
-2. Start the embedded server with 1 command:
-   ```powershell
-   .\mvnw.cmd compile exec:java
-   ```
-3. Open your browser at `http://localhost:8080` (or `http://localhost:8080/login`).
-4. Default login accounts:
-   - **Administrator**: `admin` / `Admin@123`
-   - **Teacher**: `teacher` / `Teacher@123`
-   - **Principal**: `principal` / `Principal@123`
-   - **Student**: `student` / `Student@123`
+### 4.1. Development Fixtures (Built-In Test Accounts)
+The automated migration initializes these accounts for immediate testing:
+
+| Role | Username | Password | Purpose |
+|---|---|---|---|
+| **Administrator** | `admin` | `admin123` | Complete school management, user registration & password resets |
+| **Principal** | `principal` | `principal123` | Academic supervision & report card approval |
+| **Teacher** | `teacher.abebe` | `teacher123` | Assigned classes, attendance, and mark entry |
+| **Registrar** | `registrar` | `registrar123` | Student admissions & multi-year progression |
+| **Attendance Officer** | `attendance` | `attendance123` | Daily school-wide attendance recording |
+| **Student** | `student.dawit` | `student123` | Child-friendly student portal & personal report card |
+
+### 4.2. Production User Provisioning Workflow
+In a live school environment:
+1. Log in with the initial `admin` account.
+2. Go to **Users (`/admin/users`)** or **Teachers (`/admin/teachers`)**.
+3. Create accounts for each faculty member and administrative officer with custom usernames and passwords.
+4. When teachers and staff log in, they use their own assigned credentials at `/login`.
+5. Passwords can be updated or reset at any time by the administrator.
