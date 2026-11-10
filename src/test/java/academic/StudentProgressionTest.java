@@ -11,22 +11,12 @@ import java.sql.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class StudentProgressionTest {
-
-    private boolean isDatabaseAvailable() {
-        try (java.sql.Connection conn = util.DBConnection.getConnection()) {
-            return conn != null && !conn.isClosed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
     @Test
     @DisplayName("Preserve historical enrollment records when student is promoted from Grade 1 to Grade 2")
     void testStudentPromotionPreservesHistoricalEnrollments() {
-        assumeTrue(isDatabaseAvailable(), "MySQL database not accessible; skipping DB integration test");
         DatabaseMigration.runMigrations();
 
         StudentDAO studentDAO = new StudentDAO();

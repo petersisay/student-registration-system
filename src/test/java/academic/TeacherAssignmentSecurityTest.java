@@ -9,22 +9,12 @@ import util.DatabaseMigration;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class TeacherAssignmentSecurityTest {
-
-    private boolean isDatabaseAvailable() {
-        try (java.sql.Connection conn = util.DBConnection.getConnection()) {
-            return conn != null && !conn.isClosed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
     @Test
     @DisplayName("Enforce teacher class and subject assignment authorization boundaries")
     void testTeacherAssignmentAuthorizationBoundaries() {
-        assumeTrue(isDatabaseAvailable(), "MySQL database not accessible; skipping DB integration test");
         DatabaseMigration.runMigrations();
         TeacherDAO teacherDAO = new TeacherDAO();
 

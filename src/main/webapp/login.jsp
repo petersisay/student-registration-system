@@ -84,14 +84,10 @@
             <p class="text-muted small mb-4"><%= I18nUtil.getMessage(currentLocale, "auth.login_subtitle") %></p>
         </div>
 
-        <% 
-            String customError = (String) request.getAttribute("errorMessageText");
-            String displayError = customError != null ? customError : (errorKey != null ? I18nUtil.getMessage(currentLocale, errorKey) : null);
-            if (displayError != null) { 
-        %>
+        <% if (errorKey != null) { %>
             <div class="alert alert-danger py-2 small d-flex align-items-center gap-2 mb-3" role="alert">
                 <i class="bi bi-exclamation-triangle-fill"></i>
-                <span><%= displayError %></span>
+                <span><%= I18nUtil.getMessage(currentLocale, errorKey) %></span>
             </div>
         <% } %>
 
@@ -102,7 +98,7 @@
             </div>
         <% } %>
 
-        <form action="<%= ctx %>/login" method="post" id="loginForm">
+        <form action="<%= ctx %>/login" method="post">
             <input type="hidden" name="csrfToken" value="<%= csrfToken != null ? csrfToken : "" %>">
             <% if (request.getParameter("redirect") != null) { %>
                 <input type="hidden" name="redirect" value="<%= request.getParameter("redirect") %>">
@@ -112,7 +108,7 @@
                 <label class="form-label fw-semibold small text-muted"><%= I18nUtil.getMessage(currentLocale, "auth.username") %></label>
                 <div class="input-group">
                     <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-person"></i></span>
-                    <input type="text" name="username" id="usernameInput" class="form-control border-start-0" placeholder="Username / የተጠቃሚ ስም" required autofocus>
+                    <input type="text" name="username" class="form-control border-start-0" placeholder="Username / የተጠቃሚ ስም" required autofocus>
                 </div>
             </div>
 
@@ -120,10 +116,7 @@
                 <label class="form-label fw-semibold small text-muted"><%= I18nUtil.getMessage(currentLocale, "auth.password") %></label>
                 <div class="input-group">
                     <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-lock"></i></span>
-                    <input type="password" name="password" id="passwordInput" class="form-control border-start-0 border-end-0" placeholder="••••••••" required>
-                    <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePasswordBtn" onclick="togglePasswordVisibility()" title="Show/Hide Password" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); color: #94A3B8;">
-                        <i class="bi bi-eye" id="togglePasswordIcon"></i>
-                    </button>
+                    <input type="password" name="password" class="form-control border-start-0" placeholder="••••••••" required>
                 </div>
             </div>
 
@@ -131,31 +124,6 @@
                 <i class="bi bi-box-arrow-in-right"></i> <%= I18nUtil.getMessage(currentLocale, "auth.login") %>
             </button>
         </form>
-
-        <!-- 1-Click Quick Demo Credentials Pill -->
-        <div class="mt-4 p-3 rounded" style="background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(0, 242, 254, 0.35);">
-            <div class="d-flex align-items-center justify-content-between mb-2">
-                <span class="fw-bold small" style="color: #00F2FE;"><i class="bi bi-key-fill text-warning me-1"></i> Quick Demo Login (Click to Fill):</span>
-                <span class="badge bg-info text-dark" style="font-size: 0.65rem;">1-Click</span>
-            </div>
-            <div class="d-flex flex-wrap gap-2">
-                <button type="button" class="btn btn-sm btn-outline-light text-nowrap" style="font-size: 0.75rem; border-color: rgba(0,242,254,0.4);" onclick="fillCredentials('admin', 'admin123')">
-                    <i class="bi bi-shield-lock-fill text-warning"></i> Admin
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-light text-nowrap" style="font-size: 0.75rem; border-color: rgba(0,242,254,0.4);" onclick="fillCredentials('teacher.abebe', 'teacher123')">
-                    <i class="bi bi-person-workspace text-info"></i> Teacher
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-light text-nowrap" style="font-size: 0.75rem; border-color: rgba(0,242,254,0.4);" onclick="fillCredentials('principal', 'principal123')">
-                    <i class="bi bi-award-fill text-success"></i> Principal
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-light text-nowrap" style="font-size: 0.75rem; border-color: rgba(0,242,254,0.4);" onclick="fillCredentials('registrar', 'registrar123')">
-                    <i class="bi bi-card-checklist text-primary"></i> Registrar
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-light text-nowrap" style="font-size: 0.75rem; border-color: rgba(0,242,254,0.4);" onclick="fillCredentials('student.dawit', 'student123')">
-                    <i class="bi bi-backpack-fill text-warning"></i> Student
-                </button>
-            </div>
-        </div>
 
         <div class="text-center mt-3">
             <a href="<%= ctx %>/index.jsp" class="text-decoration-none small text-muted">
@@ -167,31 +135,5 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<%= ctx %>/js/app.js"></script>
-<script>
-function fillCredentials(u, p) {
-    var uInput = document.getElementById('usernameInput');
-    var pInput = document.getElementById('passwordInput');
-    if (uInput && pInput) {
-        uInput.value = u;
-        pInput.value = p;
-        uInput.focus();
-    }
-}
-
-function togglePasswordVisibility() {
-    var pInput = document.getElementById('passwordInput');
-    var icon = document.getElementById('togglePasswordIcon');
-    if (!pInput || !icon) return;
-    if (pInput.type === 'password') {
-        pInput.type = 'text';
-        icon.classList.remove('bi-eye');
-        icon.classList.add('bi-eye-slash');
-    } else {
-        pInput.type = 'password';
-        icon.classList.remove('bi-eye-slash');
-        icon.classList.add('bi-eye');
-    }
-}
-</script>
 </body>
 </html>

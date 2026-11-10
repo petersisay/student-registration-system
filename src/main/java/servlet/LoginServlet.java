@@ -52,39 +52,8 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        String cleanUsername = username.trim();
-        String cleanPassword = password.trim();
-
-        User user = null;
-        boolean dbError = false;
-        try {
-            user = userDAO.findByUsername(cleanUsername);
-        } catch (Exception e) {
-            dbError = true;
-            System.err.println("[LoginServlet] Database exception during login for '" + cleanUsername + "': " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        if (user == null && !dbError) {
-            // Check if DB is reachable
-            try (java.sql.Connection conn = util.DBConnection.getConnection()) {
-                // Connection alive, user genuinely not found
-            } catch (Exception ex) {
-                dbError = true;
-                System.err.println("[LoginServlet] Database is unreachable: " + ex.getMessage());
-            }
-        }
-
-        if (dbError) {
-            request.setAttribute("errorMessageText", "Database connection is currently unavailable. Please ensure your cloud database is running and try again.");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
-            return;
-        }
-
-        boolean passwordMatch = (user != null) && PasswordUtil.verifyPassword(cleanPassword, user.getPasswordHash(), user.getSalt());
-        System.out.println("[LoginServlet] Authentication attempt for '" + cleanUsername + "' -> User found: " + (user != null) + ", Password match: " + passwordMatch);
-
-        if (passwordMatch) {
+        User user = userDAO.findByUsername(username.trim());
+        if (user != null && PasswordUtil.verifyPassword(password, user.getPasswordHash(), user.getSalt())) {
             // Protect against Session Fixation: invalidate existing session & create fresh
             HttpSession oldSession = request.getSession(false);
             if (oldSession != null) {
@@ -96,10 +65,8 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("currentLocale", user.getPreferredLocale() != null ? user.getPreferredLocale() : "en");
 
             // Audit login
-            try {
-                schoolOpsDAO.logAudit(new AuditLog(user.getId(), "LOGIN", "USER", String.valueOf(user.getId()),
-                        "Successful authentication for user: " + user.getUsername(), request.getRemoteAddr()));
-            } catch (Exception ignored) {}
+            schoolOpsDAO.logAudit(new AuditLog(user.getId(), "LOGIN", "USER", String.valueOf(user.getId()),
+                    "Successful authentication for user: " + user.getUsername(), request.getRemoteAddr()));
 
             if (redirect != null && !redirect.trim().isEmpty() && !redirect.contains("/login") && !redirect.contains("/logout")) {
                 response.sendRedirect(redirect);
@@ -108,10 +75,8 @@ public class LoginServlet extends HttpServlet {
             }
         } else {
             // Audit failed attempt
-            try {
-                schoolOpsDAO.logAudit(new AuditLog(null, "LOGIN_FAILED", "USER", cleanUsername,
-                        "Failed login attempt for username: " + cleanUsername, request.getRemoteAddr()));
-            } catch (Exception ignored) {}
+            schoolOpsDAO.logAudit(new AuditLog(null, "LOGIN_FAILED", "USER", username,
+                    "Failed login attempt for username: " + username, request.getRemoteAddr()));
 
             request.setAttribute("errorMessage", "auth.invalid_credentials");
             request.getRequestDispatcher("/login.jsp").forward(request, response);

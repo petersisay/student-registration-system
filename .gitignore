@@ -7,30 +7,6 @@ tomcat.*/
 cookies.txt
 *.zip
 
-### Environment Variables & Secrets (NEVER COMMIT) ###
-.env
-.env.local
-.env.*.local
-.env.*
-!.env.example
-*.key
-*.pem
-*.crt
-*.cert
-*.p12
-*.secret
-*.token
-credentials.json
-service-account*.json
-secrets/
-private/
-
-### Local Tunnels & Dev Logs ###
-*.log
-local.tunnel
-localtunnel.log
-ngrok.log
-
 ### IntelliJ IDEA ###
 .idea/
 .smarttomcat/

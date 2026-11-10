@@ -44,7 +44,7 @@ The Administrator can register accounts for all school personnel:
      - `ADMIN` (አስተዳዳሪ)
    - **Login Credentials (የመግቢያ መረጃ)**:
      - **Username (የተጠቃሚ ስም)**: Enter a unique identifier (e.g. `registrar.chaltu`).
-     - **Password (የይለፍ ቃል)**: Enter a strong initial password (e.g. `<InitialSecurePassword>`).
+     - **Password (የይለፍ ቃል)**: Enter the initial password (e.g. `ChaltuPass@2026`).
    - **Email & Phone (ኢሜይል እና ስልክ)**: Optional contact information.
    - **Preferred Language (ቋንቋ)**: English or አማርኛ.
 5. Click **Create User Account**.
@@ -63,7 +63,7 @@ Administrators can also register faculty directly from the Faculty Directory:
    - Specialization (e.g. `Mathematics`, `Amharic`, `Environmental Science`).
    - Qualification (e.g. `B.Ed in Mathematics`, `Diploma`).
    - **Login Username (የተጠቃሚ ስም)**: Custom username for the teacher (e.g. `teacher.meles`).
-   - **Login Password (የይለፍ ቃል)**: Custom initial password (e.g. `<InitialSecurePassword>`).
+   - **Login Password (የይለፍ ቃል)**: Custom initial password (e.g. `MelesPass@2026`).
 4. Click **Register Faculty**.
 5. The system creates the `User` account with role `TEACHER`, links `teacher.user_id = user.id`, and saves the faculty record.
 6. The teacher can immediately sign in at `/login`.

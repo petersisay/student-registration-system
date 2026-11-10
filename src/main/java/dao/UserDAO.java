@@ -15,11 +15,7 @@ public class UserDAO {
 
     public User findByUsername(String username) {
         if (username == null || username.trim().isEmpty()) return null;
-        try {
-            util.DatabaseMigration.runMigrations();
-        } catch (Exception ignored) {}
-
-        String sql = "SELECT * FROM users WHERE LOWER(TRIM(username)) = LOWER(TRIM(?)) AND is_active = TRUE";
+        String sql = "SELECT * FROM users WHERE username = ? AND is_active = TRUE";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username.trim());
@@ -29,7 +25,6 @@ public class UserDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("[UserDAO] Error querying user by username '" + username + "': " + e.getMessage());
             e.printStackTrace();
         }
         return null;
