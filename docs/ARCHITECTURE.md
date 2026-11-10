@@ -51,7 +51,7 @@ src/
 │   │   │   ├── TimetableServlet.java      # Weekly schedule planner
 │   │   │   ├── AnnouncementServlet.java   # School broadcasts
 │   │   │   └── LoginServlet.java          # Authentication & session renewal
-│   │   └── util/            # PasswordUtil (PBKDF2), DBConnection, I18nUtil
+│   │   └── util/            # PasswordUtil (PBKDF2), DBConnection, EnvUtil, I18nUtil
 │   ├── resources/
 │   │   ├── db/migrations/   # Versioned SQL migrations (V1, V2)
 │   │   ├── messages_en.properties # English localization

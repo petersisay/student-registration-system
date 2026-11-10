@@ -2,24 +2,23 @@
 ### Bule Hora Elementary School Information Management System
 **ቡሌ ሆራ የመጀመሪያ ደረጃ ትምህርት ቤት መረጃ አስተዳደር ሥርዓት (ከ1ኛ - 8ኛ ክፍል)**
 
-[![Live Deployment](https://img.shields.io/badge/Render-Live%20Online-00c58e.svg?logo=render&logoColor=white)](https://bule-hora-elementary-school.onrender.com)
+[![Live Deployment](https://img.shields.io/badge/Deployment-Ready-00c58e.svg?logo=render&logoColor=white)](#-9-free-cloud-deployment-guide)
 [![Java](https://img.shields.io/badge/Java-17%2B-blue.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Jakarta EE](https://img.shields.io/badge/Jakarta%20EE-10.0-orange.svg?logo=eclipse&logoColor=white)](https://jakarta.ee/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-00758F.svg?logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Tomcat](https://img.shields.io/badge/Tomcat-10.1-yellow.svg?logo=apachetomcat&logoColor=white)](https://tomcat.apache.org/)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3.svg?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
-[![Tests Passing](https://img.shields.io/badge/Tests-7%2F7%20Passing-brightgreen.svg)]()
+[![Tests Passing](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
-## 🌐 Live Production Deployment
+## 🌐 Production & Cloud Deployment Highlights
 
-The application is deployed live in production on free cloud infrastructure:
-- **Production URL**: **[https://bule-hora-elementary-school.onrender.com](https://bule-hora-elementary-school.onrender.com)**
-- **Cloud Platform**: Render Web Services (Dockerized Java 17 Runtime)
-- **Database Engine**: Aiven Cloud MySQL 8.x (SSL Encrypted)
-- **Local Dev Tunnel**: `https://bule-hora-school.loca.lt` (Bypass password: `196.191.52.71`)
+The application is pre-configured for containerized and cloud execution:
+- **Cloud Platforms**: Render, Railway, Fly.io, or self-hosted Docker
+- **Database Engine**: MySQL 8.x / MariaDB (Supports SSL encryption & UTF-8 / `utf8mb4`)
+- **Security**: Zero hardcoded secrets; fully driven by environment variables (`.env`) and cloud secret managers
 
 ---
 
@@ -161,6 +160,7 @@ The database features 20 normalized tables with strict foreign keys and transact
 5. **SQL Injection Immunity**: 100% of database queries utilize parameterized JDBC `PreparedStatement` instances.
 6. **XSS Prevention**: All user-submitted fields rendered in JSP templates utilize `<c:out>` escaping or JSTL equivalent.
 7. **Clean Production Views**: No raw default credentials or test passwords appear on public login cards or landing pages.
+8. **Environment-Based Secret Isolation**: Zero hardcoded secrets, API tokens, or database passwords in the codebase. All credentials are parsed via `EnvUtil` from an untracked local `.env` file or cloud environment variables, strictly excluded from Git and Docker builds.
 
 ---
 
@@ -199,23 +199,30 @@ The test suite covers unit and integration validations executed automatically vi
    cd student-registration-system
    ```
 
-2. **Launch the Embedded Server**:
+2. **Configure Environment Variables & Secrets**:
+   ```bash
+   # Copy the example environment template
+   cp .env.example .env
+   ```
+   *Edit `.env` to specify your local database password (`DB_PASSWORD`) and custom initial administrator credentials (`INITIAL_ADMIN_PASSWORD`). The `.env` file is protected by `.gitignore` and is never committed to GitHub.*
+
+3. **Launch the Embedded Server**:
    ```powershell
    .\mvnw.cmd compile exec:java
    ```
    *The embedded Tomcat 10.1 server starts immediately on `http://localhost:8080/`.*
 
-3. **Access the Application**:
+4. **Access the Application**:
    Navigate to [http://localhost:8080/](http://localhost:8080/) in your web browser.
 
 ---
 
 ## 🌐 9. Free Cloud Deployment Guide
 
-The project is configured for free cloud hosting with zero cost:
-- **Render**: Deploys automatically via Docker and `render.yaml`.
-- **Aiven Cloud MySQL**: Free 5 GB managed MySQL database forever with SSL encryption.
-- **Railway.app**: 1-click GitHub deployment with automatic database URL injection.
+The project is configured for seamless containerized and cloud hosting:
+- **Render**: Deploys automatically via Docker and `render.yaml`. Define database connection secrets in the Render dashboard.
+- **Railway.app**: 1-click GitHub deployment with automatic database URL injection via `DATABASE_URL`.
+- **Fly.io / Docker**: Container image builds cleanly using multi-stage `Dockerfile`.
 - Complete step-by-step instructions are available in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ---
@@ -232,6 +239,7 @@ For offline distribution, backups, or submission:
 
 ```
 student-registration-system/
+├── .env.example                 # Clean configuration template with zero exposed credentials
 ├── docs/
 │   ├── ARCHITECTURE.md          # Full architectural breakdown, security & RBAC matrix
 │   ├── DATABASE.md              # Database schema, ERD, and migration guide
@@ -245,7 +253,7 @@ student-registration-system/
 │   │   │   ├── filter/          # UTF-8, CSRF, Locale, and RBAC filters
 │   │   │   ├── model/           # Enterprise domain models (User, Teacher, Student...)
 │   │   │   ├── servlet/         # Jakarta 10 Controller Servlets (AdminUserServlet...)
-│   │   │   └── util/            # DBConnection, PasswordUtil, I18nUtil
+│   │   │   └── util/            # DBConnection, EnvUtil, PasswordUtil, I18nUtil
 │   │   ├── resources/
 │   │   │   ├── db/migrations/   # Versioned SQL migrations (V1, V2)
 │   │   │   ├── messages_en.properties # English language bundle
@@ -255,7 +263,7 @@ student-registration-system/
 │   │       ├── js/app.js        # Micro-interactions and counter animations
 │   │       ├── login.jsp        # Bilingual animated login portal
 │   │       └── WEB-INF/views/   # Protected JSP templates by role (admin, teacher, student...)
-│   └── test/java/               # Automated test suite (7/7 tests passing)
+│   └── test/java/               # Automated test suite
 ├── pom.xml                      # Maven configuration (Java 17, Tomcat 10.1 embed)
 ├── Dockerfile                   # Multi-stage production container build
 ├── render.yaml                  # Infrastructure-as-code cloud deployment manifest

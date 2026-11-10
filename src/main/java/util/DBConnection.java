@@ -26,9 +26,9 @@ public class DBConnection {
 
     private static synchronized void loadConfiguration() {
         // Support standard cloud provider connection URIs (Render, Railway, Fly.io, Heroku, Aiven)
-        String cloudDatabaseUrl = System.getenv("DATABASE_URL");
+        String cloudDatabaseUrl = EnvUtil.get("DATABASE_URL");
         if (cloudDatabaseUrl == null || cloudDatabaseUrl.trim().isEmpty()) {
-            cloudDatabaseUrl = System.getenv("MYSQL_URL");
+            cloudDatabaseUrl = EnvUtil.get("MYSQL_URL");
         }
 
         if (cloudDatabaseUrl != null && !cloudDatabaseUrl.trim().isEmpty()) {
@@ -68,10 +68,10 @@ public class DBConnection {
             }
         }
 
-        String envUrl = System.getenv("DB_URL");
-        String host = System.getenv("DB_HOST");
-        String port = System.getenv("DB_PORT");
-        String dbName = System.getenv("DB_NAME");
+        String envUrl = EnvUtil.get("DB_URL");
+        String host = EnvUtil.get("DB_HOST");
+        String port = EnvUtil.get("DB_PORT");
+        String dbName = EnvUtil.get("DB_NAME");
 
         if (envUrl != null && !envUrl.trim().isEmpty()) {
             dbUrl = envUrl.trim();
@@ -94,10 +94,10 @@ public class DBConnection {
                     + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Africa/Addis_Ababa&characterEncoding=UTF-8";
         }
 
-        String envUser = System.getenv("DB_USER");
+        String envUser = EnvUtil.get("DB_USER");
         dbUser = (envUser != null && !envUser.trim().isEmpty()) ? envUser.trim() : "root";
 
-        String envPass = System.getenv("DB_PASSWORD");
+        String envPass = EnvUtil.get("DB_PASSWORD");
         // On local WAMP / XAMPP, default root password is empty string
         dbPassword = (envPass != null) ? envPass : "";
     }

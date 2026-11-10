@@ -5,3 +5,23 @@ target/
 *.log
 *.ps1
 bule-hora-school-management-system.zip
+
+# Security, environment secrets, and keys (NEVER BAKE INTO IMAGES)
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*.cert
+*.secret
+*.token
+credentials.json
+service-account*.json
+secrets/
+private/
+
+# IDE & Editor Files
+.idea/
+.vscode/
+.smarttomcat/

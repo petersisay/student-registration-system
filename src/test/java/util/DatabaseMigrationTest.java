@@ -6,11 +6,22 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class DatabaseMigrationTest {
 
+    private boolean isDatabaseAvailable() {
+        try (Connection conn = DBConnection.getConnection()) {
+            return conn != null && !conn.isClosed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @Test
     public void testDatabaseMigrationAndSeedData() {
+        assumeTrue(isDatabaseAvailable(), "MySQL database not accessible; skipping DB migration test");
+
         // Run migration
         DatabaseMigration.runMigrations();
 
@@ -45,8 +56,7 @@ public class DatabaseMigrationTest {
             }
 
         } catch (Exception e) {
-            System.err.println("Migration test notice (MySQL may not be running or credentials differ): " + e.getMessage());
-            // Fail if an unexpected error occurs
+            System.err.println("Migration test notice: " + e.getMessage());
             fail("Migration test encountered error: " + e.getMessage());
         }
     }

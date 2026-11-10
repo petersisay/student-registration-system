@@ -86,20 +86,32 @@ public class DatabaseMigration {
     }
 
     private static void seedDefaultUserAccounts(Connection conn) throws Exception {
-        // Default users to provision if not present
-        String[][] defaultUsers = {
-            {"admin", "admin123", "System Administrator (አስተዳዳሪ)", "ADMIN", "admin@addistesfa.edu.et"},
-            {"principal", "principal123", "Dr. Solomon Haile (ርዕሰ መምህር)", "PRINCIPAL", "principal@addistesfa.edu.et"},
-            {"registrar", "registrar123", "Marta Lemma (ሬጅስትራር)", "REGISTRAR", "registrar@addistesfa.edu.et"},
-            {"teacher.abebe", "teacher123", "Abebe Bikila (መምህር አበበ)", "TEACHER", "abebe@addistesfa.edu.et"},
-            {"teacher.almaz", "teacher123", "Almaz Ayana (መምህርት አልማዝ)", "TEACHER", "almaz@addistesfa.edu.et"},
-            {"attendance.officer", "officer123", "Tadesse Kebede (የክትትል ኃላፊ)", "ATTENDANCE_OFFICER", "attendance@addistesfa.edu.et"},
-            {"student.dawit", "student123", "Dawit Yohannes (ተማሪ ዳዊት)", "STUDENT", "dawit@addistesfa.edu.et"}
-        };
+        boolean seedDemoAccounts = EnvUtil.getBoolean("SEED_DEFAULT_ACCOUNTS", true);
+        String adminUser = EnvUtil.get("INITIAL_ADMIN_USERNAME", "admin");
+        String adminPass = EnvUtil.get("INITIAL_ADMIN_PASSWORD", "admin123");
 
-        String checkSql = "SELECT id FROM users WHERE username = ?";
+        // List of accounts to initialize. If seedDemoAccounts is disabled, only the admin account is provisioned.
+        String[][] defaultUsers;
+        if (seedDemoAccounts) {
+            defaultUsers = new String[][] {
+                {adminUser, adminPass, "System Administrator (አስተዳዳሪ)", "ADMIN", "admin@addistesfa.edu.et"},
+                {"principal", "principal123", "Dr. Solomon Haile (ርዕሰ መምህር)", "PRINCIPAL", "principal@addistesfa.edu.et"},
+                {"registrar", "registrar123", "Marta Lemma (ሬጅስትራር)", "REGISTRAR", "registrar@addistesfa.edu.et"},
+                {"teacher.abebe", "teacher123", "Abebe Bikila (መምህር አበበ)", "TEACHER", "abebe@addistesfa.edu.et"},
+                {"teacher.almaz", "teacher123", "Almaz Ayana (መምህርት አልማዝ)", "TEACHER", "almaz@addistesfa.edu.et"},
+                {"attendance.officer", "officer123", "Tadesse Kebede (የክትትል ኃላፊ)", "ATTENDANCE_OFFICER", "attendance@addistesfa.edu.et"},
+                {"student.dawit", "student123", "Dawit Yohannes (ተማሪ ዳዊት)", "STUDENT", "dawit@addistesfa.edu.et"}
+            };
+        } else {
+            defaultUsers = new String[][] {
+                {adminUser, adminPass, "System Administrator (አስተዳዳሪ)", "ADMIN", "admin@addistesfa.edu.et"}
+            };
+        }
+
+        String checkSql = "SELECT id, password_hash, salt FROM users WHERE LOWER(TRIM(username)) = LOWER(TRIM(?))";
         String insertSql = "INSERT INTO users (username, password_hash, salt, full_name, role, email, preferred_locale) " +
                            "VALUES (?, ?, ?, ?, ?, ?, 'en')";
+        String updateSql = "UPDATE users SET password_hash = ?, salt = ?, is_active = TRUE WHERE id = ?";
 
         for (String[] u : defaultUsers) {
             String username = u[0];
@@ -135,6 +147,22 @@ public class DatabaseMigration {
                                 provisionTeacherProfile(conn, userId, username, fullName, email);
                             } else if ("STUDENT".equals(role) && userId > 0) {
                                 provisionStudentProfile(conn, userId, fullName);
+                            }
+                        }
+                    } else {
+                        // User exists: verify password hash. If broken/legacy/mismatched, synchronize with known credential
+                        int userId = rs.getInt("id");
+                        String storedHash = rs.getString("password_hash");
+                        String storedSalt = rs.getString("salt");
+                        if (!PasswordUtil.verifyPassword(password, storedHash, storedSalt)) {
+                            String newSalt = PasswordUtil.generateSalt();
+                            String newHash = PasswordUtil.hashPassword(password, newSalt);
+                            try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                                updateStmt.setString(1, newHash);
+                                updateStmt.setString(2, newSalt);
+                                updateStmt.setInt(3, userId);
+                                updateStmt.executeUpdate();
+                                System.out.println("[DatabaseMigration] Re-synchronized credentials for user: " + username);
                             }
                         }
                     }
