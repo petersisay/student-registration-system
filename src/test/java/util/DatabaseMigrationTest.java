@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class DatabaseMigrationTest {
 
     @Test
     public void testDatabaseMigrationAndSeedData() {
+        assumeTrue(util.DBConnection.isAvailable(), "Skipping test: Database is not reachable in current environment.");
         // Run migration
         DatabaseMigration.runMigrations();
 

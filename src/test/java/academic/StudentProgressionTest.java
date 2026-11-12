@@ -11,12 +11,14 @@ import java.sql.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class StudentProgressionTest {
 
     @Test
     @DisplayName("Preserve historical enrollment records when student is promoted from Grade 1 to Grade 2")
     void testStudentPromotionPreservesHistoricalEnrollments() {
+        assumeTrue(util.DBConnection.isAvailable(), "Skipping test: Database is not reachable in current environment.");
         DatabaseMigration.runMigrations();
 
         StudentDAO studentDAO = new StudentDAO();

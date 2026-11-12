@@ -7,18 +7,15 @@ The **Bule Hora Elementary School Management System** is packaged as both a stan
 
 ## 2. 1-Click & Free-Tier Hosting Options
 
-### Option A: Render (Free Web Service)
+### Option A: Render + TiDB Cloud Serverless (Recommended Production Setup)
 1. Fork or push your code to your GitHub account: `https://github.com/petersisay/student-registration-system`.
 2. Sign in to [Render.com](https://render.com) (free account).
-3. Click **New +** -> **Blueprint** or **Web Service**.
-4. Select this repository. Render automatically reads `render.yaml` and `Dockerfile`.
-5. Under Environment Variables, configure your free MySQL database credentials:
-   - `DB_HOST`: Hostname of remote MySQL database
-   - `DB_PORT`: `3306` (or host port)
-   - `DB_NAME`: Database schema name
-   - `DB_USER`: Remote database user
-   - `DB_PASSWORD`: Remote database password
-6. Click **Deploy**. The system will build and launch automatically.
+3. Click **New +** -> **Web Service** -> connect your GitHub repository.
+4. Render automatically reads `Dockerfile` and builds the production container.
+5. Under **Environment Variables**, configure your database connection via TiDB Cloud Serverless or direct MySQL:
+   - `DATABASE_URL`: `mysql://<user>:<password>@gateway01.<region>.prod.aws.tidbcloud.com:4000/test`
+   *(Or individually: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`)*
+6. Click **Deploy**. The system will build, run automated database migrations, seed default accounts, and launch live.
 
 ### Option B: Railway.app (Free Automatic Cloud Deployment)
 1. Sign in to [Railway.app](https://railway.app).

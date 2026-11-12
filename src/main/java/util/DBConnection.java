@@ -70,8 +70,13 @@ public class DBConnection {
 
         String envUrl = System.getenv("DB_URL");
         String host = System.getenv("DB_HOST");
+        if (host == null || host.trim().isEmpty()) host = System.getenv("HOST");
+
         String port = System.getenv("DB_PORT");
+        if (port == null || port.trim().isEmpty()) port = System.getenv("PORT");
+
         String dbName = System.getenv("DB_NAME");
+        if (dbName == null || dbName.trim().isEmpty()) dbName = System.getenv("DATABASE");
 
         if (envUrl != null && !envUrl.trim().isEmpty()) {
             dbUrl = envUrl.trim();
@@ -95,9 +100,11 @@ public class DBConnection {
         }
 
         String envUser = System.getenv("DB_USER");
+        if (envUser == null || envUser.trim().isEmpty()) envUser = System.getenv("USERNAME");
         dbUser = (envUser != null && !envUser.trim().isEmpty()) ? envUser.trim() : "root";
 
         String envPass = System.getenv("DB_PASSWORD");
+        if (envPass == null) envPass = System.getenv("PASSWORD");
         // On local WAMP / XAMPP, default root password is empty string
         dbPassword = (envPass != null) ? envPass : "";
     }
@@ -142,6 +149,14 @@ public class DBConnection {
             initialized = true;
         } catch (Exception e) {
             initialized = true;
+        }
+    }
+
+    public static boolean isAvailable() {
+        try (Connection conn = getConnection()) {
+            return conn != null && !conn.isClosed();
+        } catch (Exception e) {
+            return false;
         }
     }
 
